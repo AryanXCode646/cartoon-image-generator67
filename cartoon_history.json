@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-12-17T01:23:19.448620",
+    "image_path": "cartoon_20251217_012319.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-17T01:20:51.995825",
+    "image_path": "cartoon_20251217_012051.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-17T01:20:28.006595",
+    "image_path": "cartoon_20251217_012028.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  }
+]

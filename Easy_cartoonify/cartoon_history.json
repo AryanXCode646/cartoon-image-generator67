@@ -1,0 +1,692 @@
+[
+  {
+    "timestamp": "2025-12-23T23:57:29.711763",
+    "image_path": "cartoon_20251223_235729.png",
+    "style": "watercolor",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:57:21.316050",
+    "image_path": "cartoon_20251223_235721.png",
+    "style": "cartoon_gan",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:57:14.013783",
+    "image_path": "cartoon_20251223_235714.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:56:43.680890",
+    "image_path": "cartoon_20251223_235643.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:56:28.526723",
+    "image_path": "cartoon_20251223_235628.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:56:20.673520",
+    "image_path": "cartoon_20251223_235620.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:49:31.897109",
+    "image_path": "cartoon_20251223_234931.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:40:39.813176",
+    "image_path": "cartoon_20251223_234039.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:40:31.507521",
+    "image_path": "cartoon_20251223_234031.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:29:39.198403",
+    "image_path": "cartoon_20251223_232939.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:29:26.473479",
+    "image_path": "cartoon_20251223_232926.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:29:11.834595",
+    "image_path": "cartoon_20251223_232911.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:28:43.041064",
+    "image_path": "cartoon_20251223_232843.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T23:28:34.615955",
+    "image_path": "cartoon_20251223_232834.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T22:26:24.384067",
+    "image_path": "cartoon_20251223_222624.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T22:25:57.597397",
+    "image_path": "cartoon_20251223_222557.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T22:25:50.437040",
+    "image_path": "cartoon_20251223_222550.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T22:04:54.232476",
+    "image_path": "cartoon_20251223_220454.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T22:04:47.236336",
+    "image_path": "cartoon_20251223_220447.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:56:54.716854",
+    "image_path": "cartoon_20251223_215654.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:56:46.243504",
+    "image_path": "cartoon_20251223_215646.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:56:41.225793",
+    "image_path": "cartoon_20251223_215641.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:56:30.393664",
+    "image_path": "cartoon_20251223_215630.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:55:27.845244",
+    "image_path": "cartoon_20251223_215527.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:55:21.260255",
+    "image_path": "cartoon_20251223_215521.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:55:14.046716",
+    "image_path": "cartoon_20251223_215514.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:54:55.899227",
+    "image_path": "cartoon_20251223_215455.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:53:46.631438",
+    "image_path": "cartoon_20251223_215346.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:53:16.155746",
+    "image_path": "cartoon_20251223_215316.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:53.195308",
+    "image_path": "cartoon_20251223_214753.png",
+    "style": "cartoon_gan",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:43.474779",
+    "image_path": "cartoon_20251223_214743.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:35.422989",
+    "image_path": "cartoon_20251223_214735.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:24.083364",
+    "image_path": "cartoon_20251223_214724.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:16.047343",
+    "image_path": "cartoon_20251223_214716.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:47:05.187839",
+    "image_path": "cartoon_20251223_214705.png",
+    "style": "watercolor",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:46:56.789977",
+    "image_path": "cartoon_20251223_214656.png",
+    "style": "cartoon_gan",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:46:43.328902",
+    "image_path": "cartoon_20251223_214643.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:31:33.343435",
+    "image_path": "cartoon_20251223_213133.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:31:26.465382",
+    "image_path": "cartoon_20251223_213126.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:29:49.590776",
+    "image_path": "cartoon_20251223_212949.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:29:34.613814",
+    "image_path": "cartoon_20251223_212934.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:28:16.169708",
+    "image_path": "cartoon_20251223_212816.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:28:05.609924",
+    "image_path": "cartoon_20251223_212805.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:28:00.536601",
+    "image_path": "cartoon_20251223_212800.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:27:55.229416",
+    "image_path": "cartoon_20251223_212755.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:27:23.778394",
+    "image_path": "cartoon_20251223_212723.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:27:11.270484",
+    "image_path": "cartoon_20251223_212711.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:23:22.371390",
+    "image_path": "cartoon_20251223_212322.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:23:02.467832",
+    "image_path": "cartoon_20251223_212302.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:22:46.601970",
+    "image_path": "cartoon_20251223_212246.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:21:06.936599",
+    "image_path": "cartoon_20251223_212106.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:20:56.713310",
+    "image_path": "cartoon_20251223_212056.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:17:11.576139",
+    "image_path": "cartoon_20251223_211711.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:17:04.755356",
+    "image_path": "cartoon_20251223_211704.png",
+    "style": "watercolor",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:16:59.160576",
+    "image_path": "cartoon_20251223_211659.png",
+    "style": "cartoon_gan",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:16:52.813121",
+    "image_path": "cartoon_20251223_211652.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:16:36.654626",
+    "image_path": "cartoon_20251223_211636.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:16:27.928698",
+    "image_path": "cartoon_20251223_211627.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:15:25.011948",
+    "image_path": "cartoon_20251223_211525.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:15:12.684502",
+    "image_path": "cartoon_20251223_211512.png",
+    "style": "paprika",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "paprika",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:14:55.669453",
+    "image_path": "cartoon_20251223_211455.png",
+    "style": "anime_ghibli",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "face_paint_512_v2",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:14:29.486295",
+    "image_path": "cartoon_20251223_211429.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:09:21.211977",
+    "image_path": "cartoon_20251223_210921.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T21:07:23.298644",
+    "image_path": "cartoon_20251223_210723.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T20:54:07.397185",
+    "image_path": "cartoon_20251223_205407.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T20:54:03.198616",
+    "image_path": "cartoon_20251223_205403.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-23T20:34:36.426038",
+    "image_path": "cartoon_20251223_203436.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-18T15:53:16.976192",
+    "image_path": "cartoon_20251218_155316.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  },
+  {
+    "timestamp": "2025-12-18T15:53:00.434666",
+    "image_path": "cartoon_20251218_155300.png",
+    "style": "ghibli_pro",
+    "style_strength": 0.7,
+    "image_size": "512x512",
+    "model_used": "OpenCV",
+    "prompt": "",
+    "metadata": {}
+  }
+]
