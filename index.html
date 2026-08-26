@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoonify Studio Pro — AI & Computer Vision Image Cartoonization Suite</title>
+  <meta name="description" content="Production-ready AI & Computer Vision cartoonization suite featuring Studio Ghibli, AnimeGANv2, Comic Pop Art, and Watercolor filters with Web Studio, Desktop GUI, and Python SDK.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Ambient background glow -->
+  <div class="ambient-glow">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <span>🚀 <strong>Cartoonify Studio v2.0 Released:</strong> 10+ artistic styles, interactive Web Studio, Desktop GUI & Python SDK!</span>
+    <a href="#quickstart" class="announcement-link">Get Started →</a>
+  </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar glass-panel">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span class="brand-icon">🎨</span>
+        <span class="brand-name">Cartoonify <span class="gradient-text">Studio Pro</span></span>
+        <span class="brand-badge">v2.0</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#demo" class="nav-link">Live Playground</a>
+        <a href="#styles" class="nav-link">Styles Gallery</a>
+        <a href="#developers" class="nav-link">Python SDK & CLI</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+        <a href="https://github.com/AryanXCode646/cartoon-image-generator67" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+          <span>⭐ GitHub</span>
+        </a>
+        <a href="#quickstart" class="btn btn-primary btn-sm">
+          <span>🚀 Run Local</span>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <header class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span class="pill-dot"></span>
+          <span>Next-Gen AI & Computer Vision Stylizer</span>
+        </div>
+        <h1 class="hero-title">
+          Turn Any Photo Into <br>
+          <span class="gradient-text">Studio Ghibli & Anime</span> Artwork
+        </h1>
+        <p class="hero-subtitle">
+          An enterprise-grade cartoonization engine built with PyTorch, AnimeGANv2, and OpenCV. Features a responsive <strong>Web Studio</strong> with live Before/After comparison, a zero-lag <strong>Desktop GUI</strong>, and a developer-first <strong>CLI & Python SDK</strong>.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#demo" class="btn btn-primary btn-lg">
+            <span>✨ Try Live Playground</span>
+          </a>
+          <a href="#quickstart" class="btn btn-secondary btn-lg">
+            <span>💻 1-Click Launch</span>
+          </a>
+        </div>
+
+        <div class="hero-badges">
+          <div class="badge-item">
+            <span class="badge-icon">⚡</span>
+            <span>&lt;0.25s Fast Inference</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🔒</span>
+            <span>100% Offline & Private</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🎯</span>
+            <span>Face-Preserved Alignment</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">📦</span>
+            <span>Batch ZIP Export</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Interactive Before/After Split Comparison -->
+      <div class="hero-visual">
+        <div class="hero-card glass-panel">
+          <div class="hero-card-header">
+            <div class="preset-selector">
+              <span class="preset-label">Sample Preset:</span>
+              <button class="preset-btn active" data-preset="portrait">Portrait</button>
+              <button class="preset-btn" data-preset="city">Tokyo Skyline</button>
+              <button class="preset-btn" data-preset="nature">Mountain Valley</button>
+            </div>
+            <div class="style-pill">🎬 Studio Ghibli Pro</div>
+          </div>
+
+          <div class="hero-split-viewer" id="heroViewer">
+            <div class="hero-img-wrapper original-wrapper">
+              <img id="heroImgOriginal" src="" alt="Original Photo">
+              <span class="image-tag original-tag">Original</span>
+            </div>
+            <div class="hero-img-wrapper cartoon-wrapper" id="heroCartoonWrapper">
+              <img id="heroImgCartoon" src="" alt="Cartoon Artwork">
+              <span class="image-tag cartoon-tag">Ghibli Artwork</span>
+            </div>
+            <div class="hero-split-handle" id="heroHandle">
+              <div class="handle-bar"></div>
+              <div class="handle-knob">◀ ▶</div>
+              <div class="handle-bar"></div>
+            </div>
+          </div>
+
+          <div class="hero-card-footer">
+            <span>Drag slider to compare original vs cartoonified aesthetic</span>
+            <span class="resolution-badge" id="heroResBadge">1920 × 1080</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== STATS STRIP ===== -->
+  <section class="stats-strip">
+    <div class="container stats-container">
+      <div class="stat-card glass-panel">
+        <span class="stat-number">10+</span>
+        <span class="stat-label">Curated Styles & Models</span>
+      </div>
+      <div class="stat-card glass-panel">
+        <span class="stat-number">3 Modes</span>
+        <span class="stat-label">Web Studio, GUI & CLI</span>
+      </div>
+      <div class="stat-card glass-panel">
+        <span class="stat-number">25 / 25</span>
+        <span class="stat-label">Automated Unit Tests</span>
+      </div>
+      <div class="stat-card glass-panel">
+        <span class="stat-number">0s</span>
+        <span class="stat-label">Cloud API Delay (100% Local)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTERACTIVE DEMO PLAYGROUND ===== -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">INTERACTIVE SIMULATOR</span>
+        <h2 class="section-title">Experience Cartoonify in Your Browser</h2>
+        <p class="section-subtitle">
+          Test our real-time computer vision shaders right in your browser canvas or drop your own photo!
+        </p>
+      </div>
+
+      <div class="playground-layout glass-panel">
+        <!-- Left Playground Controls -->
+        <div class="playground-sidebar">
+          <div class="sidebar-block">
+            <label class="block-label">1. Choose Photo</label>
+            <div class="playground-presets">
+              <button class="play-preset active" data-img="portrait">👤 Portrait</button>
+              <button class="play-preset" data-img="landscape">🏞️ Landscape</button>
+              <button class="play-preset" data-img="cyberpunk">🌃 Cyberpunk</button>
+              <button class="play-preset" id="playUploadBtn">📁 Upload File</button>
+              <input type="file" id="playFileInput" accept="image/*" hidden>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <label class="block-label">2. Select Cartoon Style</label>
+            <div class="playground-styles-grid">
+              <button class="style-choice-btn active" data-style="ghibli_pro">
+                <span class="style-choice-icon">🎬</span>
+                <span class="style-choice-name">Ghibli Pro</span>
+              </button>
+              <button class="style-choice-btn" data-style="comic_pop">
+                <span class="style-choice-icon">💥</span>
+                <span class="style-choice-name">Comic Pop</span>
+              </button>
+              <button class="style-choice-btn" data-style="watercolor">
+                <span class="style-choice-icon">🎭</span>
+                <span class="style-choice-name">Watercolor</span>
+              </button>
+              <button class="style-choice-btn" data-style="neon">
+                <span class="style-choice-icon">⚡</span>
+                <span class="style-choice-name">Neon Glow</span>
+              </button>
+              <button class="style-choice-btn" data-style="pencil">
+                <span class="style-choice-icon">✏️</span>
+                <span class="style-choice-name">Pencil Sketch</span>
+              </button>
+              <button class="style-choice-btn" data-style="retro">
+                <span class="style-choice-icon">📺</span>
+                <span class="style-choice-name">Retro 90s</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="slider-row">
+              <label class="block-label">Stylization Strength</label>
+              <span class="slider-indicator" id="playStrengthVal">85%</span>
+            </div>
+            <input type="range" id="playStrength" min="20" max="100" value="85" class="custom-range">
+          </div>
+
+          <div class="sidebar-block">
+            <div class="slider-row">
+              <label class="block-label">Edge Inking Thickness</label>
+              <span class="slider-indicator" id="playEdgeVal">2px</span>
+            </div>
+            <input type="range" id="playEdge" min="1" max="5" value="2" class="custom-range">
+          </div>
+        </div>
+
+        <!-- Right Playground Canvas Display -->
+        <div class="playground-viewport">
+          <div class="playground-canvas-wrapper" id="playViewer">
+            <canvas id="canvasOriginal" class="play-canvas"></canvas>
+            <div class="cartoon-canvas-clipper" id="playClipper">
+              <canvas id="canvasCartoon" class="play-canvas"></canvas>
+            </div>
+            <div class="hero-split-handle" id="playHandle">
+              <div class="handle-bar"></div>
+              <div class="handle-knob">◀ ▶</div>
+              <div class="handle-bar"></div>
+            </div>
+          </div>
+
+          <div class="playground-footer">
+            <div class="engine-indicator">
+              <span class="pulse-dot"></span>
+              <span id="playEngineStatus">Client-Side Canvas Shader Active</span>
+            </div>
+            <button id="downloadPlaygroundBtn" class="btn btn-secondary btn-xs">💾 Save Artwork</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPREHENSIVE FEATURES GRID ===== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">CORE CAPABILITIES</span>
+        <h2 class="section-title">Built for Creators, Engineers & Power Users</h2>
+        <p class="section-subtitle">
+          Everything you need from high-definition artistic filters to automated batch CLI pipelines.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(255, 107, 107, 0.15); color: #ff6b6b;">🎬</div>
+          <h3 class="feature-title">Studio Ghibli & Neural Anime</h3>
+          <p class="feature-desc">
+            Integrates official AnimeGANv2 PyTorch Hub checkpoints alongside fine-tuned artistic Ghibli shaders for lush hand-painted lighting.
+          </p>
+        </div>
+
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(78, 205, 196, 0.15); color: #4ecdc4;">👤</div>
+          <h3 class="feature-title">Smart Face Preservation</h3>
+          <p class="feature-desc">
+            Automatically detects facial landmarks and applies proportional expansion with soft feathered elliptical blending to preserve identity.
+          </p>
+        </div>
+
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(108, 92, 231, 0.15); color: #6c5ce7;">🌐</div>
+          <h3 class="feature-title">Glassmorphic Web Studio</h3>
+          <p class="feature-desc">
+            Zero-configuration single-page web app built on FastAPI with interactive split slider, webcam snapshot modal, and drag-and-drop.
+          </p>
+        </div>
+
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(0, 206, 201, 0.15); color: #00cec9;">🖥️</div>
+          <h3 class="feature-title">Async Desktop GUI</h3>
+          <p class="feature-desc">
+            Responsive cross-platform desktop application powered by modern Tkinter and asynchronous background worker threads.
+          </p>
+        </div>
+
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(253, 203, 110, 0.15); color: #fdcb6e;">📦</div>
+          <h3 class="feature-title">Batch Directory Processing</h3>
+          <p class="feature-desc">
+            Process thousands of photos in seconds. Available via the Web Studio with instant ZIP download or through high-speed CLI commands.
+          </p>
+        </div>
+
+        <div class="feature-card glass-panel">
+          <div class="feature-icon-box" style="background: rgba(0, 184, 148, 0.15); color: #00b894;">🐍</div>
+          <h3 class="feature-title">Python SDK & CLI Suite</h3>
+          <p class="feature-desc">
+            Clean, modular, and type-annotated Python API (<code>from cartoonify import CartoonEngine</code>) with 100% test coverage.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STYLES GALLERY ===== -->
+  <section class="section styles-section" id="styles">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">STYLE CATALOG</span>
+        <h2 class="section-title">10+ Distinct Artistic & Neural Styles</h2>
+        <p class="section-subtitle">
+          Engineered for portrait photographs, landscapes, architectural shots, and anime character art.
+        </p>
+      </div>
+
+      <div class="style-cards-carousel">
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag neural">Neural AI</div>
+          <div class="style-header">
+            <span class="style-emoji">✨</span>
+            <div>
+              <h4>Anime Portrait Soft</h4>
+              <span class="style-model">face_paint_512_v2</span>
+            </div>
+          </div>
+          <p>Trained on thousands of painted portrait artworks. Soft eyes, subtle highlights, and expressive contouring.</p>
+        </div>
+
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag artistic">Artistic CV</div>
+          <div class="style-header">
+            <span class="style-emoji">🎬</span>
+            <div>
+              <h4>Studio Ghibli Pro</h4>
+              <span class="style-model">Multi-Pass Bilateral + CLAHE</span>
+            </div>
+          </div>
+          <p>Lush warm color harmonies, atmospheric light balance, and painterly background softness.</p>
+        </div>
+
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag neural">Neural AI</div>
+          <div class="style-header">
+            <span class="style-emoji">🎨</span>
+            <div>
+              <h4>Paprika Vibrant</h4>
+              <span class="style-model">Satoshi Kon Weights</span>
+            </div>
+          </div>
+          <p>Deep rich saturation, bold cinematic shadows, and vivid illustrative coloring.</p>
+        </div>
+
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag artistic">Artistic CV</div>
+          <div class="style-header">
+            <span class="style-emoji">💥</span>
+            <div>
+              <h4>Comic Pop Art</h4>
+              <span class="style-model">Adaptive Threshold + Quantize</span>
+            </div>
+          </div>
+          <p>Graphic novel aesthetic with thick black ink contours and cell-shaded primary colors.</p>
+        </div>
+
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag artistic">Artistic CV</div>
+          <div class="style-header">
+            <span class="style-emoji">🎭</span>
+            <div>
+              <h4>Watercolor Dream</h4>
+              <span class="style-model">Pigment Diffusion Filter</span>
+            </div>
+          </div>
+          <p>Soft fluid pigment wash, fluid color bleeding, and gentle canvas texture.</p>
+        </div>
+
+        <div class="style-showcase-card glass-panel">
+          <div class="style-tag artistic">Artistic CV</div>
+          <div class="style-header">
+            <span class="style-emoji">⚡</span>
+            <div>
+              <h4>Neon Cyberpunk</h4>
+              <span class="style-model">Darkened Tone + Edge Glow</span>
+            </div>
+          </div>
+          <p>Electric cyan and magenta glowing contours over dark high-contrast silhouettes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DEVELOPER CODE INTEGRATION ===== -->
+  <section class="section developers-section" id="developers">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">DEVELOPER INTEGRATION</span>
+        <h2 class="section-title">Integrate in 3 Lines of Python</h2>
+        <p class="section-subtitle">
+          Designed for developers, ML engineers, and automation workflows.
+        </p>
+      </div>
+
+      <div class="code-hub glass-panel">
+        <div class="code-hub-tabs">
+          <button class="code-tab-btn active" data-tab="tabPython">🐍 Python SDK</button>
+          <button class="code-tab-btn" data-tab="tabCLI">💻 Terminal CLI</button>
+          <button class="code-tab-btn" data-tab="tabAPI">🌐 REST API</button>
+          <button class="code-tab-btn" data-tab="tabBatch">📦 Batch Script</button>
+        </div>
+
+        <!-- Code Block 1: Python SDK -->
+        <div class="code-block-content active" id="tabPython">
+          <div class="code-header">
+            <span class="code-lang">python</span>
+            <button class="copy-code-btn" data-target="codePy">📋 Copy Code</button>
+          </div>
+          <pre><code id="codePy">from cartoonify import CartoonEngine
+
+# Initialize the engine (automatically selects CUDA GPU or CPU)
+engine = CartoonEngine()
+
+# 1. Transform an image file with Studio Ghibli aesthetic
+engine.process_file(
+    "portrait.jpg",
+    "cartoon_portrait.jpg",
+    style="ghibli_pro",
+    strength=0.85,
+    use_face_align=True
+)
+
+# 2. In-memory processing with custom shader sliders
+import cv2
+img = cv2.imread("landscape.jpg")
+cartoon = engine.process_image(
+    img,
+    style="custom",
+    custom_params={
+        "line_thickness": 2,
+        "line_opacity": 0.8,
+        "num_colors": 12,
+        "saturation": 1.3
+    }
+)
+cv2.imwrite("output.jpg", cartoon)</code></pre>
+        </div>
+
+        <!-- Code Block 2: CLI -->
+        <div class="code-block-content" id="tabCLI">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-code-btn" data-target="codeCLI">📋 Copy Code</button>
+          </div>
+          <pre><code id="codeCLI"># Transform a single image
+python -m cartoonify process photo.jpg -o cartoon.jpg --style ghibli_pro --strength 0.85
+
+# Enable face-aligned feathered blend for portraits
+python -m cartoonify process selfie.jpg -o selfie_anime.jpg --style anime_soft --face-align
+
+# Batch process an entire directory of photos
+python -m cartoonify batch ./my_vacation_photos -o ./cartoons --style comic_pop
+
+# Launch the Web Studio UI
+python -m cartoonify web --port 8000
+
+# Launch the Desktop GUI
+python -m cartoonify gui</code></pre>
+        </div>
+
+        <!-- Code Block 3: REST API -->
+        <div class="code-block-content" id="tabAPI">
+          <div class="code-header">
+            <span class="code-lang">bash / cURL</span>
+            <button class="copy-code-btn" data-target="codeAPI">📋 Copy Code</button>
+          </div>
+          <pre><code id="codeAPI"># 1. Process image via multipart form upload
+curl -X POST "http://localhost:8000/api/process-upload" \
+     -F "file=@portrait.jpg" \
+     -F "style=ghibli_pro" \
+     -F "strength=0.85" \
+     --output cartoon_result.jpg
+
+# 2. Query available styles catalog
+curl -X GET "http://localhost:8000/api/styles"
+
+# 3. Health & Device diagnostic check
+curl -X GET "http://localhost:8000/api/health"</code></pre>
+        </div>
+
+        <!-- Code Block 4: Batch Script -->
+        <div class="code-block-content" id="tabBatch">
+          <div class="code-header">
+            <span class="code-lang">python</span>
+            <button class="copy-code-btn" data-target="codeBatch">📋 Copy Code</button>
+          </div>
+          <pre><code id="codeBatch">from pathlib import Path
+from cartoonify import CartoonEngine
+
+engine = CartoonEngine()
+photos = list(Path("./input_photos").glob("*.jpg"))
+
+def on_progress(current, total, filename):
+    print(f"[{current}/{total}] Processed: {Path(filename).name}")
+
+results = engine.process_batch(
+    photos,
+    output_dir="./cartoon_gallery",
+    style="watercolor",
+    strength=0.8,
+    progress_callback=on_progress
+)
+print(f"Successfully cartoonified {len(results)} images!")</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ARCHITECTURE DIAGRAM SECTION ===== -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">PIPELINE ARCHITECTURE</span>
+        <h2 class="section-title">How the Processing Engine Works</h2>
+        <p class="section-subtitle">
+          Seamless multi-stage pipeline balancing neural inference, morphological contouring, and feathered masking.
+        </p>
+      </div>
+
+      <div class="pipeline-diagram glass-panel">
+        <div class="pipeline-step">
+          <div class="step-num">01</div>
+          <div class="step-icon">📥</div>
+          <h4>Input Ingestion</h4>
+          <p>Loads RGB/BGR image from file, webcam stream, or Base64 buffer with automatic aspect ratio clamping.</p>
+        </div>
+
+        <div class="pipeline-arrow">➔</div>
+
+        <div class="pipeline-step">
+          <div class="step-num">02</div>
+          <div class="step-icon">👤</div>
+          <h4>Face Detection</h4>
+          <p>Haar cascade locates the primary portrait face, scales bounding box by 1.6x, and builds feathered alpha mask.</p>
+        </div>
+
+        <div class="pipeline-arrow">➔</div>
+
+        <div class="pipeline-step">
+          <div class="step-num">03</div>
+          <div class="step-icon">🧠</div>
+          <h4>Neural / CV Transform</h4>
+          <p>Applies AnimeGANv2 PyTorch weights or Ghibli multi-pass bilateral filtering and K-Means color quantization.</p>
+        </div>
+
+        <div class="pipeline-arrow">➔</div>
+
+        <div class="pipeline-step">
+          <div class="step-num">04</div>
+          <div class="step-icon">✨</div>
+          <h4>Detail Post-Process</h4>
+          <p>LAB CLAHE contrast enhancement, unsharp mask clarity, and feathered composite reconstruction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUICKSTART & DOWNLOAD SECTION ===== -->
+  <section class="section quickstart-section" id="quickstart">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">GET STARTED</span>
+        <h2 class="section-title">Run Cartoonify on Your Machine</h2>
+        <p class="section-subtitle">
+          Clone the repository and launch the app in less than 60 seconds.
+        </p>
+      </div>
+
+      <div class="quickstart-grid">
+        <div class="quickstart-card glass-panel">
+          <h3>⚡ 1-Click Launchers (Windows)</h3>
+          <p>No terminal commands needed. Simply double-click any launcher in the repository root:</p>
+          <ul class="file-list">
+            <li><code>run_web.bat</code> — Starts the interactive Web Studio</li>
+            <li><code>run_gui.bat</code> — Starts the modern Desktop GUI</li>
+            <li><code>run_tests.bat</code> — Runs the Pytest suite</li>
+          </ul>
+        </div>
+
+        <div class="quickstart-card glass-panel">
+          <h3>💻 Manual Setup (All OS)</h3>
+          <pre class="cli-box"><code>git clone https://github.com/AryanXCode646/cartoon-image-generator67.git
+cd cartoon-image-generator67
+
+python -m venv .venv
+.\.venv\Scripts\activate   # Linux/macOS: source .venv/bin/activate
+
+pip install -r requirements.txt
+python -m cartoonify web</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ SECTION ===== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-badge">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item glass-panel">
+          <summary class="faq-question">
+            <span>Do I need a GPU to run Cartoonify?</span>
+            <span class="faq-chevron">▾</span>
+          </summary>
+          <div class="faq-answer">
+            No! Cartoonify is heavily optimized for CPU execution. In addition, all artistic filters (Ghibli Pro, Comic Pop Art, Watercolor, Neon, Pencil Sketch) run exclusively on OpenCV algorithms in milliseconds. If a CUDA GPU is detected, PyTorch neural models will automatically leverage it for maximum speed.
+          </div>
+        </details>
+
+        <details class="faq-item glass-panel">
+          <summary class="faq-question">
+            <span>Are my images uploaded to any cloud server?</span>
+            <span class="faq-chevron">▾</span>
+          </summary>
+          <div class="faq-answer">
+            100% No. All processing runs completely locally on your machine. No photos, data, or personal metrics are ever sent to external cloud APIs.
+          </div>
+        </details>
+
+        <details class="faq-item glass-panel">
+          <summary class="faq-question">
+            <span>How does the Face-Preserved alignment mode work?</span>
+            <span class="faq-chevron">▾</span>
+          </summary>
+          <div class="faq-answer">
+            When enabled, Cartoonify detects the largest face using OpenCV Haar cascades, extracts a 1.6x expanded bounding box, runs the stylizer, and composites the stylized face back over the original image using a feathered elliptical Gaussian alpha mask. This avoids harsh boxy edges while preserving portrait identity.
+          </div>
+        </details>
+
+        <details class="faq-item glass-panel">
+          <summary class="faq-question">
+            <span>What image formats are supported?</span>
+            <span class="faq-chevron">▾</span>
+          </summary>
+          <div class="faq-answer">
+            Cartoonify supports JPEG, PNG, WebP, BMP, TIFF, and camera video streams. Output images can be exported in lossless PNG or compressed JPEG/WebP.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <span class="brand-icon">🎨</span>
+        <span class="brand-name">Cartoonify Studio Pro</span>
+        <p>Built with ❤️ by Aryan • MIT Licensed • Open Source AI</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/AryanXCode646/cartoon-image-generator67" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <a href="#demo">Live Demo</a>
+        <a href="#features">Features</a>
+        <a href="#developers">Python API</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
