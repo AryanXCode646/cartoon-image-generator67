@@ -1,45 +1,103 @@
-import cv2
-import os
+"""
+Easy Cartoonify - Interactive CLI Runner.
+Refactored to be fast, resilient, and error-free without disk freezing.
+"""
+
+import sys
 from pathlib import Path
+import cv2
 
-image_name = input("Please enter the name of the image file that you want to process:    ") ## User input for the name of the image file.
-image_directory = input("Please enter the directory that may contain the image:    ") ## User input for the path of the image file.
+# Add parent directory to path to enable cartoonify engine import
+project_root = Path(__file__).parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
-## This function looks for and finds the desired file. You can specify a parent directory for the fundtion to look for, however if you have no idea where a file is; this functio will find it for you, just slower. If you have no idea where a file is, just type "/".
-def find_the_image(file_name, directory_name):
-    files_found = []
-    for path, subdirs, files in os.walk(directory_name):
-        for name in files:
-            if(file_name == name):
-                file_path = os.path.join(path,name)
-                files_found.append(file_path)
-
-    print(files_found[0])
-    return files_found[0] ## Return the path.
+from cartoonify.engine import CartoonEngine, STYLES
 
 
-image_path = Path(find_the_image(image_name, image_directory)) ## Inıtialize the path of the image file.
-new_working_directory = image_path.parent ## Initialize the parent directory of the image path.
-os.chdir(new_working_directory) ## Change the working directory of the script to the parent directory of the image path.
+def find_image(file_name: str, directory_name: str) -> Path:
+    """Find image in the specified directory or project folder without full-disk freezing."""
+    dir_path = Path(directory_name.strip() if directory_name.strip() else ".")
+    if not dir_path.exists():
+        dir_path = Path(__file__).parent
+
+    target = dir_path / file_name.strip()
+    if target.exists() and target.is_file():
+        return target
+
+    # Local search up to 2 levels deep
+    for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp", "*.bmp"):
+        for f in dir_path.glob(f"**/{file_name}"):
+            if f.is_file():
+                return f
+
+    # Fallback to any image in current folder
+    candidates = [f for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp") for f in Path(__file__).parent.glob(ext)]
+    if candidates:
+        print(f"Notice: '{file_name}' not found. Defaulting to local image: {candidates[0].name}")
+        return candidates[0]
+
+    raise FileNotFoundError(f"Could not locate image '{file_name}' in {dir_path}")
 
 
-color_image = cv2.imread(find_the_image(image_name, image_directory))
-##cv2.imshow("image_not_processed",color_image) ## Uncomment this to see the image without the process.
-##cv2.waitKey()
-##cv2.destroyAllWindows()
+def main():
+    print("=" * 60)
+    print("   🎨 Easy Cartoonify Interactive Runner")
+    print("=" * 60)
 
-cartoon_style_selection = input("This script currently has 2 sytles. Please type 1 or 2.   ")
+    image_name = input("Please enter the name or path of the image file (or press Enter for default): ").strip()
+    if not image_name:
+        image_name = "bollywood-actress-kiara-advani-presents-a-creation-by-the-designer-duo-falguni-shane-peacock.webp"
 
-if (cartoon_style_selection == "1"):
-    cartoon_image_style_1 = cv2.stylization(color_image, sigma_s=150, sigma_r=0.25) ## Cartoonify process. 
-    cv2.imshow('cartoon_1', cartoon_image_style_1)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-elif (cartoon_style_selection == "2"):
-    cartoon_image_style_2  = cv2.stylization(color_image, sigma_s=60, sigma_r=0.5) ## Cartoonify process. 
-    cv2.imshow('cartoon_2', cartoon_image_style_2)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    image_directory = input("Please enter the directory containing the image (press Enter for current folder): ").strip()
+    if not image_directory:
+        image_directory = str(Path(__file__).parent)
 
-else:
-    print("Invalid style selection.")
+    try:
+        image_path = find_image(image_name, image_directory)
+        print(f"✅ Loading image from: {image_path}")
+    except Exception as e:
+        print(f"❌ {e}")
+        return
+
+    color_image = cv2.imread(str(image_path))
+    if color_image is None:
+        print(f"❌ Failed to decode image at {image_path}")
+        return
+
+    print("\nSelect a Cartoon Style:")
+    print("  1) Classic Smooth (OpenCV Bilateral)")
+    print("  2) Classic Sharp (OpenCV Detail)")
+    print("  3) Studio Ghibli Pro (Lush Hand-Painted)")
+    print("  4) Comic Book Pop Art")
+    print("  5) Watercolor Dream")
+
+    style_choice = input("Enter choice (1-5, default: 3): ").strip()
+    style_map = {
+        "1": "classic_v1",
+        "2": "classic_v2",
+        "3": "ghibli_pro",
+        "4": "comic_pop",
+        "5": "watercolor",
+    }
+    selected_style = style_map.get(style_choice, "ghibli_pro")
+
+    engine = CartoonEngine()
+    print(f"\nProcessing image with style '{selected_style}'...")
+    cartoon_result = engine.process_image(color_image, style=selected_style, strength=0.85)
+
+    out_path = Path(__file__).parent / f"cartoon_output_{selected_style}.jpg"
+    cv2.imwrite(str(out_path), cartoon_result)
+    print(f"✨ Artwork saved to: {out_path.name}")
+
+    try:
+        cv2.imshow(f"Cartoonify - {selected_style}", cartoon_result)
+        print("Press any key in the image window to exit...")
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    except Exception:
+        pass
+
+
+if __name__ == "__main__":
+    main()

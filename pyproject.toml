@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cartoonify"
+version = "2.0.0"
+description = "Professional AI & Computer Vision Image Cartoonization Suite"
+readme = "README.md"
+authors = [{ name = "Aryan", email = "aryan@example.com" }]
+license = { text = "MIT" }
+requires-python = ">=3.9"
+keywords = [
+    "computer-vision",
+    "cartoonify",
+    "animegan",
+    "image-processing",
+    "opencv",
+    "ghibli",
+    "deep-learning",
+    "fastapi",
+    "artistic-filters"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+dependencies = [
+    "numpy>=1.20.0",
+    "opencv-python>=4.5.0",
+    "pillow>=9.0.0",
+    "torch>=1.10.0",
+    "torchvision>=0.11.0",
+    "fastapi>=0.95.0",
+    "uvicorn>=0.20.0",
+    "python-multipart>=0.0.6",
+    "pydantic>=1.10.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.24.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0"
+]
+
+[project.scripts]
+cartoonify = "cartoonify.cli:main"

@@ -1,24 +1,34 @@
+"""
+SDXL Ghibli transformation helper with safe dependency guards and device handling.
+"""
+
+from pathlib import Path
+from typing import Optional
 import numpy as np
 import torch
 from PIL import Image
-from diffusers import StableDiffusionImg2ImgPipeline
 
 _PIPE = None
-_DEVICE = "cpu" if torch.cpu.is_available() else "cpu"
+_DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 def load_sdxl():
     """
-    Lazy‑load the SDXL img2img pipeline.
-
-    Uses GPU (cpu) if available, otherwise falls back to CPU
-    with float32, which will be much slower but still functional.
+    Lazy-load the SDXL img2img pipeline if diffusers is installed.
     """
     global _PIPE
     if _PIPE is not None:
         return _PIPE
 
-    dtype = torch.float16 if _DEVICE == "cpu" else torch.float32
+    try:
+        from diffusers import StableDiffusionImg2ImgPipeline
+    except ImportError:
+        raise ImportError(
+            "The 'diffusers' and 'transformers' packages are required for SDXL. "
+            "Install with: pip install diffusers transformers accelerate"
+        )
+
+    dtype = torch.float16 if _DEVICE == "cuda" else torch.float32
 
     _PIPE = StableDiffusionImg2ImgPipeline.from_pretrained(
         "stabilityai/stable-diffusion-xl-base-1.0",
@@ -52,18 +62,24 @@ def convert_to_ghibli_sdxl(input_path: str, output_path: str, strength: float = 
     """Disk-based SDXL helper."""
     image = Image.open(input_path).convert("RGB")
     out = _run_sdxl(image, strength=strength)
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     out.save(output_path)
 
 
 def convert_to_ghibli_sdxl_array(img_bgr: np.ndarray, strength: float = 0.5) -> np.ndarray:
     """
     In-memory SDXL helper: accepts BGR numpy image, returns BGR numpy image.
+    Falls back gracefully if diffusers is not available.
     """
     if img_bgr is None:
         raise ValueError("img_bgr must be a valid BGR image array")
 
-    img_rgb = Image.fromarray(img_bgr[:, :, ::-1].copy())
-    out = _run_sdxl(img_rgb, strength=strength)
-    out_rgb = np.array(out)
-    out_bgr = out_rgb[:, :, ::-1].copy()
-    return out_bgr
+    try:
+        img_rgb = Image.fromarray(img_bgr[:, :, ::-1].copy())
+        out = _run_sdxl(img_rgb, strength=strength)
+        out_rgb = np.array(out)
+        return out_rgb[:, :, ::-1].copy()
+    except Exception as e:
+        print(f"Notice: SDXL fallback triggered ({e}). Using Ghibli Pro artistic filter.")
+        from cartoonify.filters.artistic import style_ghibli_pro
+        return style_ghibli_pro(img_bgr, strength=strength)

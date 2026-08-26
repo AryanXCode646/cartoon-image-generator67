@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoonify Studio Pro — AI & Computer Vision Artwork Generator</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-background">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
+  <div class="app-layout">
+    <!-- ===== HEADER ===== -->
+    <header class="app-header glass-card">
+      <div class="brand-section">
+        <div class="logo-badge">
+          <span class="logo-icon">🎨</span>
+        </div>
+        <div class="brand-text">
+          <h1>Cartoonify <span class="gradient-text">Studio Pro</span></h1>
+          <span class="version-tag">v2.0 • AI & CV Engine</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="device-pill" id="deviceStatus">
+          <span class="status-dot online"></span>
+          <span id="deviceText">Engine Ready</span>
+        </div>
+        <button id="themeToggle" class="icon-btn glass-btn" title="Toggle Theme" aria-label="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== MAIN CONTENT CONTAINER ===== -->
+    <main class="app-content">
+      <!-- ===== LEFT PANEL: CONTROLS & STYLES ===== -->
+      <aside class="control-panel glass-card">
+        <!-- Navigation Tabs -->
+        <div class="panel-tabs">
+          <button class="tab-btn active" data-tab="singleTab">Single Image</button>
+          <button class="tab-btn" data-tab="batchTab">Batch Studio</button>
+          <button class="tab-btn" data-tab="historyTab">History (<span id="historyCount">0</span>)</button>
+        </div>
+
+        <!-- TAB 1: SINGLE IMAGE CONTROLS -->
+        <div class="tab-content active" id="singleTab">
+          <!-- Upload Area -->
+          <div class="section-block">
+            <label class="section-label">Source Photo</label>
+            <div class="upload-dropzone" id="dropzone">
+              <input type="file" id="fileInput" accept="image/*" hidden>
+              <div class="dropzone-content">
+                <div class="upload-icon-wrapper">
+                  <span class="upload-icon">📁</span>
+                </div>
+                <p class="dropzone-title">Drag & drop photo here</p>
+                <p class="dropzone-sub">or <span class="highlight-text">browse files</span> from your computer</p>
+                <div class="upload-buttons">
+                  <button type="button" class="btn btn-secondary btn-sm" id="browseBtn">Browse</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="webcamBtn">📸 Camera</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="sampleBtn">✨ Sample</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Style Selection -->
+          <div class="section-block">
+            <div class="section-header-row">
+              <label class="section-label">Artistic & Neural Styles</label>
+              <span class="badge" id="selectedStyleBadge">Studio Ghibli Pro</span>
+            </div>
+            <div class="styles-grid" id="stylesGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Stylization Controls -->
+          <div class="section-block">
+            <div class="slider-header">
+              <label for="strengthSlider" class="section-label">Stylization Intensity</label>
+              <span class="slider-value" id="strengthValue">85%</span>
+            </div>
+            <input type="range" id="strengthSlider" min="10" max="100" value="85" class="custom-slider">
+          </div>
+
+          <div class="section-block">
+            <label class="checkbox-container">
+              <input type="checkbox" id="faceAlignCheck">
+              <span class="checkmark"></span>
+              <span class="checkbox-label">
+                <strong>Face-Preserved Blend</strong>
+                <small>Smooth feathered alignment on detected portraits</small>
+              </span>
+            </label>
+          </div>
+
+          <!-- Custom Parameter Accordion (Collapsible) -->
+          <details class="custom-accordion" id="customAccordion">
+            <summary class="accordion-summary">
+              <span>🎛️ Advanced Shader Parameters</span>
+              <span class="accordion-chevron">▾</span>
+            </summary>
+            <div class="accordion-body">
+              <div class="param-row">
+                <label>Line Thickness: <span id="valThickness">2px</span></label>
+                <input type="range" id="paramThickness" min="1" max="5" value="2" class="custom-slider">
+              </div>
+              <div class="param-row">
+                <label>Line Opacity: <span id="valOpacity">80%</span></label>
+                <input type="range" id="paramOpacity" min="0" max="100" value="80" class="custom-slider">
+              </div>
+              <div class="param-row">
+                <label>Color Smoothness: <span id="valSmooth">2 passes</span></label>
+                <input type="range" id="paramSmooth" min="1" max="5" value="2" class="custom-slider">
+              </div>
+              <div class="param-row">
+                <label>Palette Colors: <span id="valColors">12</span></label>
+                <input type="range" id="paramColors" min="4" max="32" value="12" class="custom-slider">
+              </div>
+              <div class="param-row">
+                <label>Saturation Boost: <span id="valSaturation">1.2x</span></label>
+                <input type="range" id="paramSaturation" min="5" max="25" value="12" class="custom-slider">
+              </div>
+              <div class="param-row">
+                <label>Sharpness: <span id="valSharpness">80%</span></label>
+                <input type="range" id="paramSharpness" min="0" max="150" value="80" class="custom-slider">
+              </div>
+            </div>
+          </details>
+
+          <!-- Action Button -->
+          <div class="section-block action-block">
+            <button id="generateBtn" class="btn btn-primary btn-block btn-lg" disabled>
+              <span class="btn-icon">✨</span>
+              <span class="btn-text">Generate Cartoon Artwork</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: BATCH PROCESSING -->
+        <div class="tab-content" id="batchTab">
+          <div class="section-block">
+            <label class="section-label">Batch Image Queue</label>
+            <div class="upload-dropzone" id="batchDropzone">
+              <input type="file" id="batchFileInput" accept="image/*" multiple hidden>
+              <div class="dropzone-content">
+                <span class="upload-icon">📦</span>
+                <p class="dropzone-title">Drop multiple photos here</p>
+                <p class="dropzone-sub">Process and download all as a ZIP archive</p>
+                <button type="button" class="btn btn-secondary btn-sm" id="batchBrowseBtn">Select Multiple Files</button>
+              </div>
+            </div>
+            <div class="batch-list" id="batchList"></div>
+            <button id="batchProcessBtn" class="btn btn-primary btn-block" disabled>
+              <span>⚡ Process Batch & Download ZIP</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 3: HISTORY GALLERY -->
+        <div class="tab-content" id="historyTab">
+          <div class="section-header-row">
+            <label class="section-label">Recent Generations</label>
+            <button id="clearHistoryBtn" class="btn btn-secondary btn-xs">Clear All</button>
+          </div>
+          <div class="history-grid" id="historyGrid">
+            <p class="empty-state">No artwork generated yet. Load a photo and click Generate!</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== RIGHT PANEL: CANVAS & COMPARISON ===== -->
+      <section class="viewport-panel glass-card">
+        <!-- Viewport Toolbar -->
+        <div class="viewport-toolbar">
+          <div class="view-modes">
+            <button class="mode-btn active" data-mode="split">Split Slider</button>
+            <button class="mode-btn" data-mode="side">Side by Side</button>
+            <button class="mode-btn" data-mode="cartoon">Artwork Only</button>
+            <button class="mode-btn" data-mode="original">Original Only</button>
+          </div>
+
+          <div class="export-actions">
+            <button id="copyBtn" class="btn btn-secondary btn-sm" disabled title="Copy to clipboard">📋 Copy</button>
+            <button id="downloadBtn" class="btn btn-success btn-sm" disabled title="Download Image">💾 Download</button>
+          </div>
+        </div>
+
+        <!-- Main Display Canvas / Split Viewer -->
+        <div class="canvas-stage" id="canvasStage">
+          <!-- Placeholder State -->
+          <div class="canvas-placeholder" id="placeholderView">
+            <div class="placeholder-art">
+              <span class="placeholder-icon">🪄</span>
+            </div>
+            <h3>Transform Photos into Masterpieces</h3>
+            <p>Upload a portrait, landscape, or photo on the left to start cartoonizing with AI & Artistic filters.</p>
+          </div>
+
+          <!-- Split Comparison Viewer Container -->
+          <div class="comparison-container hidden" id="comparisonViewer">
+            <div class="image-wrapper original-wrapper">
+              <img id="imgOriginal" alt="Original photo" src="" draggable="false">
+              <span class="viewer-tag original-tag">Original</span>
+            </div>
+            <div class="image-wrapper cartoon-wrapper" id="cartoonClipWrapper">
+              <img id="imgCartoon" alt="Cartoon artwork" src="" draggable="false">
+              <span class="viewer-tag cartoon-tag" id="cartoonTagText">Cartoon</span>
+            </div>
+
+            <!-- Draggable Split Divider -->
+            <div class="split-handle" id="splitHandle">
+              <div class="handle-line"></div>
+              <div class="handle-button">
+                <span>◀ ▶</span>
+              </div>
+              <div class="handle-line"></div>
+            </div>
+          </div>
+
+          <!-- Loading Spinner Overlay -->
+          <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="spinner-ring"></div>
+            <p class="loading-text">Crafting your cartoon artwork...</p>
+            <span class="loading-sub" id="loadingSub">Applying artistic color harmonies & neural stylization</span>
+          </div>
+        </div>
+
+        <!-- Viewport Footer / Status Metrics -->
+        <footer class="viewport-footer">
+          <div class="metric-item">
+            <span class="metric-label">Status:</span>
+            <span class="metric-val" id="metricStatus">Ready</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Resolution:</span>
+            <span class="metric-val" id="metricRes">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Processing Time:</span>
+            <span class="metric-val" id="metricTime">—</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Active Style:</span>
+            <span class="metric-val highlight" id="metricStyle">Studio Ghibli Pro</span>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== WEBCAM MODAL ===== -->
+  <dialog class="modal glass-card" id="webcamModal">
+    <div class="modal-header">
+      <h3>📸 Capture Photo from Camera</h3>
+      <button class="modal-close" id="closeWebcamBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="webcam-viewport">
+        <video id="webcamVideo" autoplay playsinline></video>
+        <canvas id="webcamCanvas" hidden></canvas>
+      </div>
+      <div class="webcam-controls">
+        <button id="capturePhotoBtn" class="btn btn-primary btn-lg">📸 Take Snapshot</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

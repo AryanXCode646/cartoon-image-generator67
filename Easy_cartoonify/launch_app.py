@@ -1,27 +1,28 @@
 #!/usr/bin/env python3
 """
-Launcher for the Cartoon Image Generator GUI App
-Runs app_gui.py with proper error handling
+Cartoon Image Generator Launcher.
 """
 import sys
+import subprocess
 from pathlib import Path
 
-# Add project root to path
-project_root = Path(__file__).parent
-sys.path.insert(0, str(project_root))
+# Add project root to sys.path
+root_dir = Path(__file__).parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
-try:
-    from app_gui import CartoonifierApp
-    import tkinter as tk
-    
-    if __name__ == '__main__':
-        root = tk.Tk()
-        app = CartoonifierApp(root)
-        root.mainloop()
-except ImportError as e:
-    print(f"Error: Missing required module - {e}")
-    print("Please ensure you have installed: opencv-python, torch, pillow")
-    sys.exit(1)
-except Exception as e:
-    print(f"Error starting app: {e}")
-    sys.exit(1)
+
+def main():
+    print("Launching Cartoonify Studio Pro...")
+    try:
+        from cartoonify.gui.app import main as run_gui
+        run_gui()
+    except Exception as e:
+        print(f"Error launching GUI directly: {e}")
+        # Fallback to subprocess
+        gui_script = root_dir / "cartoonify" / "gui" / "app.py"
+        subprocess.run([sys.executable, str(gui_script)])
+
+
+if __name__ == '__main__':
+    main()
