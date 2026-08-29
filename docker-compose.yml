@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  cartoonify-web:
+    build: .
+    container_name: cartoonify_studio
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    volumes:
+      - ./cartoon_output:/app/cartoon_output
