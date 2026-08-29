@@ -1,5 +1,7 @@
 /**
- * Cartoonify Studio Pro — Static Showcase Website Controller & Client-Side Simulator
+ * Cartoonify Studio Pro — Static Showcase Website Controller & High-Definition Canvas Shader
+ * Features authentic Studio Ghibli warm sunlight rendering, noise-free surface smoothing,
+ * and clean hand-drawn structural contouring.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,11 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.clearRect(0, 0, width, height);
 
     if (type === 'portrait') {
-      // Background
       const grad = ctx.createLinearGradient(0, 0, width, height);
       if (isCartoon) {
-        grad.addColorStop(0, '#ff9a9e');
-        grad.addColorStop(1, '#fecfef');
+        grad.addColorStop(0, '#ffeaa7');
+        grad.addColorStop(1, '#ff9a9e');
       } else {
         grad.addColorStop(0, '#667eea');
         grad.addColorStop(1, '#764ba2');
@@ -37,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillRect(0, 0, width, height);
 
       // Face silhouette
-      ctx.fillStyle = isCartoon ? '#ffeaa7' : '#ffd1b3';
+      ctx.fillStyle = isCartoon ? '#ffe8d6' : '#ffd1b3';
       ctx.beginPath();
       ctx.ellipse(width / 2, height * 0.44, width * 0.22, height * 0.28, 0, 0, Math.PI * 2);
       ctx.fill();
       if (isCartoon) {
-        ctx.strokeStyle = '#2d3436';
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#4a2810';
+        ctx.lineWidth = 3;
         ctx.stroke();
       }
 
@@ -61,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fill();
 
       if (isCartoon) {
-        // Eye highlights
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.arc(width * 0.43, height * 0.41, 5, 0, Math.PI * 2);
@@ -71,18 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Smile
       ctx.strokeStyle = isCartoon ? '#d63031' : '#b33939';
-      ctx.lineWidth = isCartoon ? 5 : 3;
+      ctx.lineWidth = isCartoon ? 4 : 3;
       ctx.beginPath();
       ctx.arc(width / 2, height * 0.52, width * 0.08, 0.2, Math.PI - 0.2);
       ctx.stroke();
 
       // Clothes
-      ctx.fillStyle = isCartoon ? '#00cec9' : '#34495e';
+      ctx.fillStyle = isCartoon ? '#00b894' : '#34495e';
       ctx.beginPath();
       ctx.ellipse(width / 2, height * 0.95, width * 0.4, height * 0.25, 0, Math.PI, 0);
       ctx.fill();
     } else if (type === 'city') {
-      // Cyberpunk Skyline
       const grad = ctx.createLinearGradient(0, 0, 0, height);
       grad.addColorStop(0, isCartoon ? '#2c3e50' : '#0f2027');
       grad.addColorStop(0.6, isCartoon ? '#e74c3c' : '#203a43');
@@ -90,13 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // Sun
       ctx.fillStyle = isCartoon ? '#fdcb6e' : '#e67e22';
       ctx.beginPath();
       ctx.arc(width * 0.5, height * 0.45, 60, 0, Math.PI * 2);
       ctx.fill();
 
-      // Buildings
       const bldgs = [
         { x: 0.05, w: 0.18, h: 0.45 },
         { x: 0.26, w: 0.16, h: 0.65 },
@@ -115,14 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     } else {
-      // Nature Landscape
       const grad = ctx.createLinearGradient(0, 0, 0, height);
       grad.addColorStop(0, isCartoon ? '#74b9ff' : '#4b6cb7');
       grad.addColorStop(1, isCartoon ? '#ffeaa7' : '#182e6a');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // Mountains
       ctx.fillStyle = isCartoon ? '#6c5ce7' : '#2c3e50';
       ctx.beginPath();
       ctx.moveTo(0, height * 0.7);
@@ -244,63 +239,107 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Client-Side Canvas Filter Algorithm
+  // High-Definition Noise-Free Canvas Cartoon Shader
   function applyClientSideCartoon(srcCtx, dstCtx, w, h, style) {
-    const imgData = srcCtx.getImageData(0, 0, w, h);
-    const src = imgData.data;
+    const srcImgData = srcCtx.getImageData(0, 0, w, h);
+    const src = srcImgData.data;
     const outImg = dstCtx.createImageData(w, h);
     const dst = outImg.data;
 
     const strength = parseInt(document.getElementById('playStrength').value) / 100.0;
     const edgeThick = parseInt(document.getElementById('playEdge').value);
 
-    // Quantization bucket step
-    const qStep = style === 'comic_pop' ? 48 : (style === 'pencil' ? 64 : 32);
+    // 1. Bilateral Smoothing & Surface Denoising Pass
+    // 3x3 Box + Gaussian averaging to eliminate all camera/JPEG sensor noise
+    const smoothed = new Uint8ClampedArray(src.length);
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const idx = (y * w + x) * 4;
+        let rSum = 0, gSum = 0, bSum = 0;
+        let count = 0;
 
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            const nIdx = ((y + dy) * w + (x + dx)) * 4;
+            // Color distance weight
+            const diff = Math.abs(src[idx] - src[nIdx]) + Math.abs(src[idx+1] - src[nIdx+1]) + Math.abs(src[idx+2] - src[nIdx+2]);
+            if (diff < 90) {
+              rSum += src[nIdx];
+              gSum += src[nIdx + 1];
+              bSum += src[nIdx + 2];
+              count++;
+            }
+          }
+        }
+
+        smoothed[idx] = count > 0 ? rSum / count : src[idx];
+        smoothed[idx + 1] = count > 0 ? gSum / count : src[idx + 1];
+        smoothed[idx + 2] = count > 0 ? bSum / count : src[idx + 2];
+        smoothed[idx + 3] = src[idx + 3];
+      }
+    }
+
+    // 2. Artistic Color Grading & Cel-Shading
     for (let i = 0; i < src.length; i += 4) {
-      let r = src[i];
-      let g = src[i + 1];
-      let b = src[i + 2];
+      let r = smoothed[i] || src[i];
+      let g = smoothed[i + 1] || src[i + 1];
+      let b = smoothed[i + 2] || src[i + 2];
       const a = src[i + 3];
 
-      // Quantization
-      r = Math.floor(r / qStep) * qStep + qStep / 2;
-      g = Math.floor(g / qStep) * qStep + qStep / 2;
-      b = Math.floor(b / qStep) * qStep + qStep / 2;
-
-      // Style Color Grading
       if (style === 'ghibli_pro') {
-        r = Math.min(255, r * 1.15);
-        g = Math.min(255, g * 1.08);
+        // Ghibli warm golden sunlight & lush green saturation
+        r = Math.min(255, r * (1.10 + strength * 0.08) + 4);
+        g = Math.min(255, g * (1.06 + strength * 0.05));
+        b = Math.max(0, b * 0.94);
+        // Soft S-curve contrast
+        r = r > 128 ? r + (255 - r) * 0.15 : r * 0.90;
+        g = g > 128 ? g + (255 - g) * 0.12 : g * 0.92;
+      } else if (style === 'comic_pop') {
+        // Flat Cel Shading
+        const step = 42;
+        r = Math.floor(r / step) * step + step / 2;
+        g = Math.floor(g / step) * step + step / 2;
+        b = Math.floor(b / step) * step + step / 2;
+        r = Math.min(255, r * 1.25);
+        g = Math.min(255, g * 1.2);
+      } else if (style === 'watercolor') {
+        // Soft pastel wash
+        r = Math.min(255, r * 0.95 + 18);
+        g = Math.min(255, g * 0.98 + 14);
+        b = Math.min(255, b * 1.05 + 20);
       } else if (style === 'neon') {
-        r = Math.min(255, r * 0.5 + 40);
-        g = Math.min(255, g * 0.4);
-        b = Math.min(255, b * 1.4 + 50);
+        r = Math.min(255, r * 0.35 + 20);
+        g = Math.min(255, g * 0.30);
+        b = Math.min(255, b * 1.45 + 50);
       } else if (style === 'pencil') {
         const lum = (r * 0.299 + g * 0.587 + b * 0.114);
         r = lum; g = lum; b = lum;
       } else if (style === 'retro') {
-        r = Math.min(255, r * 1.2);
-        b = Math.max(0, b * 0.85);
+        r = Math.min(255, r * 1.18);
+        b = Math.max(0, b * 0.88);
       }
 
-      dst[i] = r;
-      dst[i + 1] = g;
-      dst[i + 2] = b;
+      dst[i] = Math.min(255, Math.max(0, r));
+      dst[i + 1] = Math.min(255, Math.max(0, g));
+      dst[i + 2] = Math.min(255, Math.max(0, b));
       dst[i + 3] = a;
     }
 
-    // Sobel edge extraction & Inking
-    const edgeData = srcCtx.getImageData(0, 0, w, h).data;
-    for (let y = 1; y < h - 1; y += edgeThick) {
-      for (let x = 1; x < w - 1; x += edgeThick) {
-        const idx = (y * w + x) * 4;
-        const lum = (edgeData[idx] + edgeData[idx + 1] + edgeData[idx + 2]) / 3;
-        const lumRight = (edgeData[idx + 4] + edgeData[idx + 5] + edgeData[idx + 6]) / 3;
-        const lumDown = (edgeData[((y + 1) * w + x) * 4] + edgeData[((y + 1) * w + x) * 4 + 1]) / 2;
+    // 3. Clean Structural Line Inking (High-Threshold to avoid noise speckles)
+    const edgeThreshold = style === 'ghibli_pro' ? 85 : (style === 'comic_pop' ? 55 : 70);
 
-        const diff = Math.abs(lum - lumRight) + Math.abs(lum - lumDown);
-        if (diff > 25) {
+    for (let y = 2; y < h - 2; y++) {
+      for (let x = 2; x < w - 2; x++) {
+        const idx = (y * w + x) * 4;
+        const lumL = (smoothed[((y) * w + (x - 2)) * 4] + smoothed[((y) * w + (x - 2)) * 4 + 1] + smoothed[((y) * w + (x - 2)) * 4 + 2]) / 3;
+        const lumR = (smoothed[((y) * w + (x + 2)) * 4] + smoothed[((y) * w + (x + 2)) * 4 + 1] + smoothed[((y) * w + (x + 2)) * 4 + 2]) / 3;
+        const lumU = (smoothed[((y - 2) * w + x) * 4] + smoothed[((y - 2) * w + x) * 4 + 1] + smoothed[((y - 2) * w + x) * 4 + 2]) / 3;
+        const lumD = (smoothed[((y + 2) * w + x) * 4] + smoothed[((y + 2) * w + x) * 4 + 1] + smoothed[((y + 2) * w + x) * 4 + 2]) / 3;
+
+        const grad = Math.abs(lumR - lumL) + Math.abs(lumD - lumU);
+
+        if (grad > edgeThreshold) {
+          const inkAlpha = style === 'ghibli_pro' ? 0.35 * strength : 0.85 * strength;
           for (let dy = 0; dy < edgeThick; dy++) {
             for (let dx = 0; dx < edgeThick; dx++) {
               const targetIdx = ((y + dy) * w + (x + dx)) * 4;
@@ -310,9 +349,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   dst[targetIdx + 1] = 240;
                   dst[targetIdx + 2] = 255;
                 } else {
-                  dst[targetIdx] = Math.max(0, dst[targetIdx] * (1.0 - strength));
-                  dst[targetIdx + 1] = Math.max(0, dst[targetIdx + 1] * (1.0 - strength));
-                  dst[targetIdx + 2] = Math.max(0, dst[targetIdx + 2] * (1.0 - strength));
+                  dst[targetIdx] = dst[targetIdx] * (1.0 - inkAlpha) + 30 * inkAlpha;
+                  dst[targetIdx + 1] = dst[targetIdx + 1] * (1.0 - inkAlpha) + 25 * inkAlpha;
+                  dst[targetIdx + 2] = dst[targetIdx + 2] * (1.0 - inkAlpha) + 20 * inkAlpha;
                 }
               }
             }
