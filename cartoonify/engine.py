@@ -54,11 +54,22 @@ class StyleConfig:
 
 
 STYLES: Dict[str, StyleConfig] = {
+    "ghibli_generative": StyleConfig(
+        key="ghibli_generative",
+        name="Studio Ghibli (Generative AI)",
+        category="Generative AI",
+        description="ChatGPT & SDXL-grade generative AI synthesis: reimagines scene with authentic hand-drawn Miyazaki anime design.",
+        icon="🔮",
+        color_accent="#E84393",
+        is_neural=True,
+        supports_face_align=True,
+        default_strength=0.75,
+    ),
     "ghibli_pro": StyleConfig(
         key="ghibli_pro",
         name="Studio Ghibli Pro",
         category="Artistic",
-        description="Lush hand-painted animation aesthetic with rich warm hues and soft atmospheric lighting.",
+        description="Kuwahara painterly filter with warm afternoon sunlight grading and anti-aliased pencil inking.",
         icon="🎬",
         color_accent="#FF6B6B",
         is_neural=False,
@@ -282,7 +293,18 @@ class CartoonEngine:
 
         # 3. Base transform function
         def run_transform(image: np.ndarray) -> np.ndarray:
-            if style_cfg.key == "ghibli_pro":
+            if style_cfg.key == "ghibli_generative":
+                from cartoonify.filters.generative import get_generative_ghibli_engine
+                from cartoonify.utils import image_to_bytes
+                gen_engine = get_generative_ghibli_engine()
+                openai_key = custom_params.get("openai_api_key") if isinstance(custom_params, dict) else None
+                if openai_key:
+                    raw = image_to_bytes(image, format_ext=".jpg")
+                    return gen_engine.transform_openai_dalle(raw, api_key=openai_key)
+                else:
+                    raw = image_to_bytes(image, format_ext=".jpg")
+                    return gen_engine.transform_huggingface(raw, strength=strength)
+            elif style_cfg.key == "ghibli_pro":
                 return style_ghibli_pro(image, strength=strength)
             elif style_cfg.key == "comic_pop":
                 return style_comic_pop_art(image, strength=strength)
