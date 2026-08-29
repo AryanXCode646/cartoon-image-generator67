@@ -1,7 +1,7 @@
 """
 Artistic and painterly non-photorealistic cartoon filters.
-Features authentic Studio Ghibli warm sunlight aesthetics, clean hand-drawn contours,
-and noise-free surface smoothing.
+Features Kuwahara painterly brushwork, Domain-Transform edge-preserving smoothing,
+Difference-of-Gaussians (DoG) clean pencil inking, and Miyazaki Studio Ghibli warm sunlight aesthetics.
 """
 
 from __future__ import annotations
@@ -13,65 +13,94 @@ from cartoonify.filters.classic import (
     apply_bilateral_smooth,
     apply_clahe_contrast,
     apply_color_quantization,
-    apply_unsharp_mask,
 )
+
+
+def kuwahara_painterly_filter(img_bgr: np.ndarray, radius: int = 3) -> np.ndarray:
+    """
+    Vectorized Kuwahara Filter: Gold standard for anime and painterly art.
+    Evaluates 4 overlapping quadrants around each pixel, assigning the mean
+    of the quadrant with the minimum variance to achieve smooth brushwork without blurring edges.
+    """
+    r = max(1, min(6, int(radius)))
+    ksize = r + 1
+    img_f = img_bgr.astype(np.float32)
+    img_sq = img_f ** 2
+
+    shifts = [(-r, -r), (-r, 0), (0, -r), (0, 0)]
+    means, vars = [], []
+
+    for sy, sx in shifts:
+        k = np.zeros((2 * r + 1, 2 * r + 1), dtype=np.float32)
+        k[r + sy : r + sy + ksize, r + sx : r + sx + ksize] = 1.0 / (ksize * ksize)
+
+        m = cv2.filter2D(img_f, -1, k)
+        m_sq = cv2.filter2D(img_sq, -1, k)
+        v = np.sum(np.maximum(0, m_sq - m ** 2), axis=2)
+
+        means.append(m)
+        vars.append(v)
+
+    min_var_idx = np.argmin(np.stack(vars, axis=-1), axis=-1)
+    output = np.zeros_like(img_f)
+    for i in range(4):
+        output += means[i] * ((min_var_idx == i)[:, :, np.newaxis])
+
+    return np.clip(output, 0, 255).astype(np.uint8)
 
 
 def style_ghibli_pro(img_bgr: np.ndarray, strength: float = 0.85) -> np.ndarray:
     """
-    Authentic Studio Ghibli painterly aesthetic:
-    - Multi-pass bilateral surface smoothing (eliminates skin speckles and noise).
-    - LAB CLAHE local contrast with warm golden afternoon sunlight grading.
-    - Saturated foliage greens and natural skin vibrancy.
-    - Clean, noise-free structural contours (eyes, silhouette, clothing folds).
+    Masterpiece Studio Ghibli Painterly Engine:
+    1. Domain-Transform edge-preserving smoothing (cleans sensor noise).
+    2. Kuwahara painterly filter (creates smooth anime cel-shading & brushstrokes).
+    3. CIE-LAB golden afternoon sunlight tone mapping.
+    4. Difference-of-Gaussians (DoG) clean hand-drawn pencil/ink contours (0% skin speckles).
     """
-    # 1. Multi-pass bilateral filter for clean anime surface smoothness
-    smooth = img_bgr.copy()
-    passes = int(np.clip(round(2 + strength * 2), 2, 4))
-    for _ in range(passes):
-        smooth = cv2.bilateralFilter(smooth, d=9, sigmaColor=85, sigmaSpace=85)
+    # 1. Advanced Domain-Transform Edge-Preserving Pre-Smoothing
+    smooth = cv2.edgePreservingFilter(img_bgr, flags=1, sigma_s=45, sigma_r=0.35)
 
-    # 2. Local contrast & warm sunlight grading in CIE-LAB space
-    lab = cv2.cvtColor(smooth, cv2.COLOR_BGR2LAB).astype(np.float32)
+    # 2. Kuwahara painterly brushwork
+    painted = kuwahara_painterly_filter(smooth, radius=3)
+
+    # 3. Miyazaki Studio Ghibli Sunlight Tone Mapping in CIE-LAB space
+    lab = cv2.cvtColor(painted, cv2.COLOR_BGR2LAB).astype(np.float32)
     l_channel = lab[:, :, 0]
 
-    clahe = cv2.createCLAHE(clipLimit=2.2, tileGridSize=(8, 8))
+    clahe = cv2.createCLAHE(clipLimit=1.8, tileGridSize=(8, 8))
     lab[:, :, 0] = clahe.apply(l_channel.astype(np.uint8)).astype(np.float32)
 
-    # Warm Ghibli tone shift: golden sunlight and soft peach skin glow
-    lab[:, :, 1] = np.clip(lab[:, :, 1] * 1.04 + 1.0, 0, 255)  # Soft magenta/warmth
-    lab[:, :, 2] = np.clip(lab[:, :, 2] * 1.10 + 2.5, 0, 255)  # Golden amber boost
+    # Golden warmth and peach skin glow
+    lab[:, :, 1] = np.clip(lab[:, :, 1] * 1.03 + 1.0, 0, 255)
+    lab[:, :, 2] = np.clip(lab[:, :, 2] * 1.08 + 2.0, 0, 255)
     warm_bgr = cv2.cvtColor(lab.astype(np.uint8), cv2.COLOR_LAB2BGR)
 
-    # 3. Rich HSV color harmonization (Miyazaki vibrant foliage and skies)
+    # Rich HSV saturation for clothing & foliage
     hsv = cv2.cvtColor(warm_bgr, cv2.COLOR_BGR2HSV).astype(np.float32)
-    hsv[:, :, 1] = np.clip(hsv[:, :, 1] * (1.18 + strength * 0.15), 0, 255)
-    hsv[:, :, 2] = np.clip(hsv[:, :, 2] * 1.04, 0, 255)
+    hsv[:, :, 1] = np.clip(hsv[:, :, 1] * (1.18 + strength * 0.12), 0, 255)
     vibrant = cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2BGR)
 
-    # 4. Clean structural ink contours (No skin noise / beard speckles)
+    # 4. Difference-of-Gaussians (DoG) Hand-Drawn Outlines
     gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
-    gray_clean = cv2.medianBlur(gray, 7)
-    edges = cv2.Canny(gray_clean, 65, 155)
+    gray_blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    dog1 = cv2.GaussianBlur(gray_blur, (3, 3), 0.5)
+    dog2 = cv2.GaussianBlur(gray_blur, (9, 9), 2.0)
+    dog = np.maximum(0, dog2.astype(np.float32) - dog1.astype(np.float32))
+    dog_norm = cv2.normalize(dog, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
 
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2, 2))
-    edges = cv2.dilate(edges, kernel, iterations=1)
+    _, edges = cv2.threshold(dog_norm, 38, 255, cv2.THRESH_BINARY)
     edges_smooth = cv2.GaussianBlur(edges, (3, 3), 0)
+    edge_alpha = (edges_smooth.astype(np.float32) / 255.0)[:, :, np.newaxis]
 
-    edge_mask = (edges_smooth.astype(np.float32) / 255.0)[:, :, np.newaxis]
+    # 5. Composite clean charcoal pencil inking
+    ink = np.array([25, 20, 18], dtype=np.float32)
+    ink_weight = 0.40 * strength
+    result = vibrant.astype(np.float32) * (1.0 - edge_alpha * ink_weight) + ink * (edge_alpha * ink_weight)
+    result = np.clip(result, 0, 255).astype(np.uint8)
 
-    # 5. Blend dark charcoal ink contours into the vibrant painterly scene
-    ink_color = np.array([28, 24, 20], dtype=np.float32)
-    ink_strength = float(np.clip(0.35 * strength, 0.15, 0.45))
-    blended = (
-        vibrant.astype(np.float32) * (1.0 - edge_mask * ink_strength)
-        + ink_color * (edge_mask * ink_strength)
-    )
-    result = np.clip(blended, 0, 255).astype(np.uint8)
-
-    # 6. Illustrative clarity unsharp mask
-    blurred = cv2.GaussianBlur(result, (0, 0), 1.2)
-    result = cv2.addWeighted(result, 1.22, blurred, -0.22, 0)
+    # 6. Gentle bloom and clarity
+    blurred = cv2.GaussianBlur(result, (0, 0), 1.0)
+    result = cv2.addWeighted(result, 1.18, blurred, -0.18, 0)
     return result
 
 
