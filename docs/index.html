@@ -439,16 +439,28 @@ tests/test_security.py (25 Fuzz Vectors) .. PASSED
       </div>
 
       <div class="style-cards-carousel">
+        <div class="style-showcase-card glass-panel" style="border: 1px solid rgba(232, 67, 147, 0.4); box-shadow: 0 8px 32px rgba(232, 67, 147, 0.15);">
+          <div class="style-tag neural" style="background: rgba(232, 67, 147, 0.2); color: #fd79a8;">Generative AI</div>
+          <div class="style-header">
+            <span class="style-emoji">🔮</span>
+            <div>
+              <h4>Studio Ghibli (ChatGPT / SDXL)</h4>
+              <span class="style-model">DALL-E 3 & Ghibli-Diffusion</span>
+            </div>
+          </div>
+          <p>ChatGPT-grade generative AI synthesis. Reimagines your photo with hand-painted Miyazaki eyes, hair, and watercolor clouds.</p>
+        </div>
+
         <div class="style-showcase-card glass-panel">
           <div class="style-tag neural">Neural AI</div>
           <div class="style-header">
-            <span class="style-emoji">✨</span>
+            <span class="style-emoji">🍃</span>
             <div>
-              <h4>Anime Portrait Soft</h4>
-              <span class="style-model">face_paint_512_v2</span>
+              <h4>Hayao AnimeGANv2</h4>
+              <span class="style-model">PyTorch Hayao Checkpoint</span>
             </div>
           </div>
-          <p>Trained on thousands of painted portrait artworks. Soft eyes, subtle highlights, and expressive contouring.</p>
+          <p>Trained directly on Miyazaki film frames. Vivid emerald foliage, azure skies, and painterly cel-shading.</p>
         </div>
 
         <div class="style-showcase-card glass-panel">
@@ -456,11 +468,11 @@ tests/test_security.py (25 Fuzz Vectors) .. PASSED
           <div class="style-header">
             <span class="style-emoji">🎬</span>
             <div>
-              <h4>Studio Ghibli Pro</h4>
-              <span class="style-model">Multi-Pass Bilateral + CLAHE</span>
+              <h4>Studio Ghibli Pro (Kuwahara)</h4>
+              <span class="style-model">Kuwahara + LAB Sunlight CLAHE</span>
             </div>
           </div>
-          <p>Lush warm color harmonies, atmospheric light balance, and painterly background softness.</p>
+          <p>Instant zero-lag computer vision shader with warm afternoon sunlight and smooth anti-aliased pencil inking.</p>
         </div>
 
         <div class="style-showcase-card glass-panel">
@@ -544,29 +556,29 @@ tests/test_security.py (25 Fuzz Vectors) .. PASSED
 # Initialize the engine (automatically selects CUDA GPU or CPU)
 engine = CartoonEngine()
 
-# 1. Transform an image file with Studio Ghibli aesthetic
+# 1. ChatGPT-Grade Generative AI Studio Ghibli Synthesis
 engine.process_file(
     "portrait.jpg",
-    "cartoon_portrait.jpg",
-    style="ghibli_pro",
-    strength=0.85,
+    "ghibli_chatgpt_art.jpg",
+    style="ghibli_generative",
+    custom_params={"openai_api_key": "your-openai-api-key"}
+)
+
+# 2. Local Neural Hayao Miyazaki Model (AnimeGANv2)
+engine.process_file(
+    "portrait.jpg",
+    "ghibli_hayao_art.jpg",
+    style="hayao",
     use_face_align=True
 )
 
-# 2. In-memory processing with custom shader sliders
-import cv2
-img = cv2.imread("landscape.jpg")
-cartoon = engine.process_image(
-    img,
-    style="custom",
-    custom_params={
-        "line_thickness": 2,
-        "line_opacity": 0.8,
-        "num_colors": 12,
-        "saturation": 1.3
-    }
-)
-cv2.imwrite("output.jpg", cartoon)</code></pre>
+# 3. High-Speed Kuwahara Painterly Filter (100% Offline)
+engine.process_file(
+    "portrait.jpg",
+    "ghibli_kuwahara.jpg",
+    style="ghibli_pro",
+    strength=0.85
+)</code></pre>
         </div>
 
         <!-- Code Block 2: CLI -->

@@ -22,14 +22,15 @@
 
 ---
 
-## 🌟 12 Curated Visual Styles
+## 🌟 13 Curated Visual Styles
 
 | Style | Category | Description | Accent |
 | :--- | :---: | :--- | :---: |
-| **🎬 Studio Ghibli Pro** | *Artistic CV* | Lush hand-painted animation aesthetic with warm color harmonies and soft atmospheric lighting. | `#FF6B6B` |
+| **🔮 Studio Ghibli (Generative AI)** | *Generative AI* | ChatGPT (DALL-E 3) & SDXL generative synthesis: reimagines scene with authentic Miyazaki character design. | `#E84393` |
+| **🎬 Studio Ghibli Pro** | *Artistic CV* | Kuwahara painterly brushwork with warm afternoon sunlight grading and anti-aliased pencil inking. | `#FF6B6B` |
+| **🍃 Hayao Anime** | *Neural AI* | PyTorch AnimeGANv2 trained directly on Miyazaki anime frames. | `#2ECC71` |
 | **✨ Anime Portrait Soft** | *Neural AI* | State-of-the-art neural anime stylization with expressive eyes and crisp face preservation. | `#4ECDC4` |
 | **🎨 Paprika Vibrant** | *Neural AI* | Warm saturated cinematic cartoon look inspired by Satoshi Kon feature animation. | `#FFB84D` |
-| **🍃 Hayao Anime** | *Neural AI* | Miyazaki-inspired vivid green fields, brilliant blue skies, and cinematic lighting. | `#2ECC71` |
 | **🌌 Shinkai Luminous** | *Neural AI* | Makoto Shinkai high-contrast radiant lighting and glowing atmospheric accents. | `#9B59B6` |
 | **💥 Comic Pop Art** | *Artistic CV* | Bold graphic novel inked contours with vibrant cell-shaded primary colors. | `#E74C3C` |
 | **🎭 Watercolor Dream** | *Artistic CV* | Soft pigment diffusion, gentle paper texture wash, and fluid color bleeding. | `#A8D8EA` |
@@ -206,28 +207,29 @@ import cv2
 # Initialize the engine (auto-selects CUDA GPU or CPU)
 engine = CartoonEngine()
 
-# 1. Process image file with face alignment
+# 1. ChatGPT-Grade Generative AI Studio Ghibli Synthesis
 engine.process_file(
-    "samples/sample_portrait.jpg",
-    "cartoon_portrait.jpg",
-    style="ghibli_pro",
-    strength=0.85,
+    "portrait.jpg",
+    "ghibli_chatgpt_art.jpg",
+    style="ghibli_generative",
+    custom_params={"openai_api_key": "your-openai-api-key"}
+)
+
+# 2. Local Neural Hayao Miyazaki Checkpoint (AnimeGANv2)
+engine.process_file(
+    "portrait.jpg",
+    "ghibli_hayao_art.jpg",
+    style="hayao",
     use_face_align=True
 )
 
-# 2. In-memory matrix processing with custom parametric shader
-img = cv2.imread("samples/sample_landscape.jpg")
-cartoon = engine.process_image(
-    img,
-    style="custom",
-    custom_params={
-        "line_thickness": 2,
-        "line_opacity": 0.8,
-        "num_colors": 12,
-        "saturation": 1.3
-    }
+# 3. High-Speed Kuwahara Painterly Filter (100% Offline)
+engine.process_file(
+    "portrait.jpg",
+    "ghibli_kuwahara.jpg",
+    style="ghibli_pro",
+    strength=0.85
 )
-cv2.imwrite("custom_landscape.jpg", cartoon)
 ```
 
 ---
