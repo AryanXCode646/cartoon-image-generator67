@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cartoonify Studio Pro — AI & Computer Vision Image Cartoonization Suite</title>
   <meta name="description" content="Production-ready AI & Computer Vision cartoonization suite featuring Studio Ghibli, AnimeGANv2, Comic Pop Art, and Watercolor filters with Web Studio, Desktop GUI, and Python SDK.">
-  <link rel="stylesheet" href="style.css?v=20260830_03">
+  <link rel="stylesheet" href="style.css?v=20260830_05">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -194,9 +194,13 @@
           <div class="sidebar-block">
             <label class="block-label">2. Select Cartoon Style</label>
             <div class="playground-styles-grid">
-              <button class="style-choice-btn active" data-style="ghibli_pro">
+              <button class="style-choice-btn active" data-style="ai_ghibli" style="grid-column: span 2; background: linear-gradient(135deg, rgba(232, 67, 147, 0.25), rgba(108, 92, 231, 0.25)); border-color: #fd79a8;">
+                <span class="style-choice-icon">🔮</span>
+                <span class="style-choice-name">AI Ghibli (ChatGPT / SDXL) <span style="font-size: 0.65rem; background: #e84393; color: white; padding: 2px 6px; border-radius: 99px; margin-left: 4px;">NEURAL AI</span></span>
+              </button>
+              <button class="style-choice-btn" data-style="ghibli_pro">
                 <span class="style-choice-icon">🎬</span>
-                <span class="style-choice-name">Ghibli Pro</span>
+                <span class="style-choice-name">Ghibli Pro (Filter)</span>
               </button>
               <button class="style-choice-btn" data-style="comic_pop">
                 <span class="style-choice-icon">💥</span>
