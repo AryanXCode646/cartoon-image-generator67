@@ -222,26 +222,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (playStyle === 'ai_ghibli') {
-      // Build descriptive prompt based on context
-      let subjectDesc = 'person';
-      if (!uploadedImg) {
-        subjectDesc = sourceType === 'portrait' ? 'friendly person wearing glasses and a green shirt'
-          : sourceType === 'landscape' ? 'lush mountain valley with a river'
-          : 'futuristic cyberpunk city at night';
+      if (uploadedImg) {
+        // We cannot do img2img on a static GitHub Page without an API key.
+        // We show a professional overlay explaining this to the user.
+        ctxCart.fillStyle = 'rgba(15, 23, 42, 0.9)';
+        ctxCart.fillRect(0, 0, CW, CH);
+        
+        ctxCart.fillStyle = '#ec4899';
+        ctxCart.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+        ctxCart.textAlign = 'center';
+        ctxCart.fillText('🔒 Backend Required for AI Face Swap', CW/2, CH/2 - 40);
+        
+        ctxCart.fillStyle = '#cbd5e1';
+        ctxCart.font = '15px "Plus Jakarta Sans", sans-serif';
+        ctxCart.fillText('GitHub Pages is a static site. We can generate new art from text,', CW/2, CH/2 - 10);
+        ctxCart.fillText('but transforming YOUR uploaded photo requires the PyTorch backend.', CW/2, CH/2 + 10);
+        
+        ctxCart.fillStyle = '#38bdf8';
+        ctxCart.font = 'bold 16px "Plus Jakarta Sans", sans-serif';
+        ctxCart.fillText('👉 Run `python -m cartoonify.cli --gui` locally to use SDXL/AnimeGAN!', CW/2, CH/2 + 50);
+        
+        setStatus('⚠️ <span style="color:#f59e0b;font-weight:700;">Local Backend Required for Img2Img</span>');
+      } else {
+        // Text-to-image for the demo presets works perfectly!
+        let subjectDesc = 'person';
+        if (sourceType === 'portrait') subjectDesc = 'friendly person wearing glasses and a green shirt';
+        else if (sourceType === 'landscape') subjectDesc = 'lush mountain valley with a river';
+        else subjectDesc = 'futuristic cyberpunk city at night';
+
+        const prompt = [
+          'masterpiece studio ghibli anime illustration',
+          `hand-painted by Hayao Miyazaki of ${subjectDesc}`,
+          'soft warm afternoon sunlight streaming through trees',
+          'rich emerald greens and golden highlights',
+          'detailed anime character design with large expressive eyes',
+          'smooth cel-shaded skin tones',
+          'watercolor clouds and atmospheric depth',
+          '8k ultra detailed anime art',
+        ].join(', ');
+
+        await generateRealGhibliFromPrompt(prompt);
       }
-
-      const prompt = [
-        'masterpiece studio ghibli anime illustration',
-        `hand-painted by Hayao Miyazaki of ${subjectDesc}`,
-        'soft warm afternoon sunlight streaming through trees',
-        'rich emerald greens and golden highlights',
-        'detailed anime character design with large expressive eyes',
-        'smooth cel-shaded skin tones',
-        'watercolor clouds and atmospheric depth',
-        '8k ultra detailed anime art',
-      ].join(', ');
-
-      await generateRealGhibliFromPrompt(prompt);
     } else {
       applyFilterShader(ctxOrig, ctxCart, CW, CH, playStyle);
       setStatus('🎬 <span style="color:#06b6d4;font-weight:700;">Artistic Filter Active</span>');
