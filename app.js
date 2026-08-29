@@ -1,7 +1,7 @@
 /**
  * Cartoonify Studio Pro — Static Showcase Website Controller & Masterpiece Anime Engine
- * Features Generative AI Ghibli synthesis (ChatGPT / SDXL grade), Kuwahara painterly shaders,
- * and Difference-of-Gaussians (DoG) clean inking.
+ * Implements 3-Tier Anime Cel Shading (Golden Highlights, Indigo Shadows, Saturated Midtones),
+ * G-Pen Manga Calligraphic Inking, and Soft Anime Bloom directly in HTML5 Canvas.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (type === 'portrait') {
       const grad = ctx.createLinearGradient(0, 0, width, height);
       if (isCartoon) {
-        grad.addColorStop(0, '#ffeaa7');
-        grad.addColorStop(1, '#ff9a9e');
+        grad.addColorStop(0, '#fbc2eb');
+        grad.addColorStop(1, '#a6c1ee');
       } else {
-        grad.addColorStop(0, '#667eea');
-        grad.addColorStop(1, '#764ba2');
+        grad.addColorStop(0, '#4b6cb7');
+        grad.addColorStop(1, '#182e6a');
       }
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
@@ -43,44 +43,86 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.ellipse(width / 2, height * 0.44, width * 0.22, height * 0.28, 0, 0, Math.PI * 2);
       ctx.fill();
       if (isCartoon) {
-        ctx.strokeStyle = '#4a2810';
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#2c1810';
+        ctx.lineWidth = 3.5;
         ctx.stroke();
       }
 
       // Hair
-      ctx.fillStyle = isCartoon ? '#2c3e50' : '#4a2810';
+      ctx.fillStyle = isCartoon ? '#2d3436' : '#4a2810';
       ctx.beginPath();
       ctx.arc(width / 2, height * 0.35, width * 0.24, Math.PI, Math.PI * 2);
       ctx.fill();
 
-      // Eyes
-      ctx.fillStyle = isCartoon ? '#0984e3' : '#333333';
-      ctx.beginPath();
-      ctx.arc(width * 0.42, height * 0.42, isCartoon ? 14 : 9, 0, Math.PI * 2);
-      ctx.arc(width * 0.58, height * 0.42, isCartoon ? 14 : 9, 0, Math.PI * 2);
-      ctx.fill();
-
+      // Anime Eye Shading & Glints
       if (isCartoon) {
+        // Left Eye (Large Anime Eye)
+        ctx.fillStyle = '#0984e3';
+        ctx.beginPath();
+        ctx.ellipse(width * 0.41, height * 0.42, 16, 20, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.ellipse(width * 0.41, height * 0.43, 8, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
-        ctx.arc(width * 0.43, height * 0.41, 5, 0, Math.PI * 2);
-        ctx.arc(width * 0.59, height * 0.41, 5, 0, Math.PI * 2);
+        ctx.arc(width * 0.43, height * 0.39, 6, 0, Math.PI * 2);
+        ctx.arc(width * 0.39, height * 0.45, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Right Eye
+        ctx.fillStyle = '#0984e3';
+        ctx.beginPath();
+        ctx.ellipse(width * 0.59, height * 0.42, 16, 20, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.ellipse(width * 0.59, height * 0.43, 8, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(width * 0.61, height * 0.39, 6, 0, Math.PI * 2);
+        ctx.arc(width * 0.57, height * 0.45, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Anime Eyelashes
+        ctx.strokeStyle = '#1e272e';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(width * 0.41, height * 0.38, 18, Math.PI + 0.3, Math.PI * 2 - 0.3);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(width * 0.59, height * 0.38, 18, Math.PI + 0.3, Math.PI * 2 - 0.3);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = '#333333';
+        ctx.beginPath();
+        ctx.arc(width * 0.42, height * 0.42, 8, 0, Math.PI * 2);
+        ctx.arc(width * 0.58, height * 0.42, 8, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // Smile
-      ctx.strokeStyle = isCartoon ? '#d63031' : '#b33939';
+      // Glasses
+      ctx.strokeStyle = '#2d3436';
       ctx.lineWidth = isCartoon ? 4 : 3;
+      ctx.strokeRect(width * 0.34, height * 0.38, width * 0.14, height * 0.08);
+      ctx.strokeRect(width * 0.52, height * 0.38, width * 0.14, height * 0.08);
       ctx.beginPath();
-      ctx.arc(width / 2, height * 0.52, width * 0.08, 0.2, Math.PI - 0.2);
+      ctx.moveTo(width * 0.48, height * 0.42);
+      ctx.lineTo(width * 0.52, height * 0.42);
       ctx.stroke();
 
-      // Clothes
-      ctx.fillStyle = isCartoon ? '#00b894' : '#34495e';
+      // Clothes (Miyazaki emerald green shirt)
+      ctx.fillStyle = isCartoon ? '#00b894' : '#27ae60';
       ctx.beginPath();
-      ctx.ellipse(width / 2, height * 0.95, width * 0.4, height * 0.25, 0, Math.PI, 0);
+      ctx.ellipse(width / 2, height * 0.95, width * 0.42, height * 0.26, 0, Math.PI, 0);
       ctx.fill();
+      if (isCartoon) {
+        ctx.strokeStyle = '#1e272e';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
     } else if (type === 'city') {
       const grad = ctx.createLinearGradient(0, 0, 0, height);
       grad.addColorStop(0, isCartoon ? '#2c3e50' : '#0f2027');
@@ -230,68 +272,27 @@ document.addEventListener('DOMContentLoaded', () => {
   canvasCartoon.width = C_WIDTH;
   canvasCartoon.height = C_HEIGHT;
 
-  async function renderPlayground() {
+  function renderPlayground() {
     if (customPlayImage) {
       ctxOrig.drawImage(customPlayImage, 0, 0, C_WIDTH, C_HEIGHT);
     } else {
       drawSample(playSourceType, ctxOrig, C_WIDTH, C_HEIGHT, false);
     }
 
-    if (playStyle === 'ai_ghibli') {
-      await generateAIGhibliArt();
-    } else {
-      if (playEngineStatus) playEngineStatus.textContent = 'Client-Side Canvas Filter Active';
-      applyClientSideCartoon(ctxOrig, ctxCart, C_WIDTH, C_HEIGHT, playStyle);
-    }
-  }
-
-  // Generative AI Ghibli Synthesis (ChatGPT / SDXL Grade)
-  async function generateAIGhibliArt() {
     if (playEngineStatus) {
-      playEngineStatus.innerHTML = '✨ <span style="color: #fd79a8;">Synthesizing AI Studio Ghibli Artwork...</span>';
+      playEngineStatus.innerHTML = playStyle === 'ai_ghibli'
+        ? '🔮 <span style="color: #ec4899; font-weight: 700;">Studio Ghibli Anime Cel Shader Active</span>'
+        : '🎬 <span style="color: #06b6d4; font-weight: 700;">Artistic CV Filter Active</span>';
     }
 
-    // First apply smooth painterly base
-    applyClientSideCartoon(ctxOrig, ctxCart, C_WIDTH, C_HEIGHT, 'ghibli_pro');
-
-    // Build prompt based on context
-    const desc = customPlayImage ? 'portrait of a person with stylish glasses, warm lighting' : (
-      playSourceType === 'portrait' ? 'anime portrait of a person' : (
-        playSourceType === 'landscape' ? 'lush green mountains and clouds' : 'cyberpunk anime city skyline'
-      )
-    );
-
-    const prompt = `masterpiece, authentic studio ghibli anime illustration of ${desc}, painted by Hayao Miyazaki, soft watercolor clouds, lush warm afternoon sunlight, detailed anime character design, cel shaded anime aesthetic, 8k`;
-    const encodedPrompt = encodeURIComponent(prompt);
-    const aiUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=720&height=450&nologo=true&seed=42&model=flux`;
-
-    try {
-      const aiImg = new Image();
-      aiImg.crossOrigin = 'anonymous';
-      aiImg.onload = () => {
-        ctxCart.clearRect(0, 0, C_WIDTH, C_HEIGHT);
-        ctxCart.drawImage(aiImg, 0, 0, C_WIDTH, C_HEIGHT);
-        if (playEngineStatus) {
-          playEngineStatus.innerHTML = '🔮 <span style="color: #00cec9;">Generative AI Studio Ghibli (ChatGPT / SDXL Grade) Active</span>';
-        }
-      };
-      aiImg.onerror = () => {
-        // Fallback to local Kuwahara Ghibli
-        applyClientSideCartoon(ctxOrig, ctxCart, C_WIDTH, C_HEIGHT, 'ghibli_pro');
-        if (playEngineStatus) {
-          playEngineStatus.textContent = 'Kuwahara Ghibli Pro Active (Offline Fallback)';
-        }
-      };
-      aiImg.src = aiUrl;
-    } catch (e) {
-      applyClientSideCartoon(ctxOrig, ctxCart, C_WIDTH, C_HEIGHT, 'ghibli_pro');
-    }
+    applyMasterpieceAnimeTransform(ctxOrig, ctxCart, C_WIDTH, C_HEIGHT, playStyle);
   }
 
   // =========================================================================
-  // Masterpiece Noise-Free Anime & Studio Ghibli Shader
+  // Masterpiece Studio Ghibli & Anime Synthesis Shader
+  // (3-Tier Anime Cel-Shading + G-Pen Calligraphic Inking + Soft Glow)
   // =========================================================================
-  function applyClientSideCartoon(srcCtx, dstCtx, w, h, style) {
+  function applyMasterpieceAnimeTransform(srcCtx, dstCtx, w, h, style) {
     const srcImgData = srcCtx.getImageData(0, 0, w, h);
     const src = srcImgData.data;
     const outImg = dstCtx.createImageData(w, h);
@@ -300,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const strength = parseInt(document.getElementById('playStrength').value) / 100.0;
     const edgeThick = parseInt(document.getElementById('playEdge').value);
 
-    // Step 1: Smooth Bilateral-Style Denoising Pass
+    // Step 1: Smooth Bilateral Denoising
     const smooth = new Uint8ClampedArray(w * h * 4);
     const rad = 2;
 
@@ -321,9 +322,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const pg = src[pIdx + 1];
             const pb = src[pIdx + 2];
 
-            const colorDiff = Math.abs(cR - pr) + Math.abs(cG - pg) + Math.abs(cB - pb);
-            if (colorDiff < 85) {
-              const wVal = 1.0 / (1.0 + colorDiff * 0.05 + (dx * dx + dy * dy) * 0.1);
+            const diff = Math.abs(cR - pr) + Math.abs(cG - pg) + Math.abs(cB - pb);
+            if (diff < 90) {
+              const wVal = 1.0 / (1.0 + diff * 0.05 + (dx * dx + dy * dy) * 0.1);
               rSum += pr * wVal;
               gSum += pg * wVal;
               bSum += pb * wVal;
@@ -339,40 +340,58 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Step 2: Smooth Cel-Shading & Ghibli Tone Mapping
+    // Step 2: 3-Tier Anime Cel-Shading & Miyazaki Warm Color Grading
     for (let i = 0; i < src.length; i += 4) {
       let r = smooth[i] || src[i];
       let g = smooth[i + 1] || src[i + 1];
       let b = smooth[i + 2] || src[i + 2];
       const a = src[i + 3];
 
-      if (style === 'ghibli_pro' || style === 'ai_ghibli') {
-        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-        const tone = lum > 145 ? 1.05 : (lum > 75 ? 1.00 : 0.92);
+      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
 
-        r = r * tone * 1.02 + 3;
-        g = g * tone;
-        b = b * tone * 0.98;
+      if (style === 'ai_ghibli' || style === 'ghibli_pro') {
+        // True Anime 3-tier lighting:
+        if (lum > 155) {
+          // Luminous Golden Anime Highlights
+          r = Math.min(255, r * 1.15 + 14);
+          g = Math.min(255, g * 1.08 + 10);
+          b = Math.max(0, b * 0.95);
+        } else if (lum < 75) {
+          // Cool Velvety Anime Shadows (Indigo Tinted)
+          r = Math.max(0, r * 0.82 - 5);
+          g = Math.max(0, g * 0.85);
+          b = Math.min(255, b * 0.95 + 10);
+        } else {
+          // Rich Saturated Anime Midtones
+          r = Math.min(255, r * 1.05 + 6);
+          g = Math.min(255, g * 1.02);
+          b = Math.max(0, b * 0.98);
+        }
+
+        // Emerald clothing & nature vibrance
+        if (g > r && g > b) {
+          g = Math.min(255, g * 1.25 + 12);
+        }
       } else if (style === 'comic_pop') {
-        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-        const tone = lum > 130 ? 1.15 : 0.85;
-        r = Math.min(255, r * tone * 1.2);
-        g = Math.min(255, g * tone * 1.15);
-        b = Math.min(255, b * tone * 1.1);
+        const step = 42;
+        r = Math.floor(r / step) * step + step / 2;
+        g = Math.floor(g / step) * step + step / 2;
+        b = Math.floor(b / step) * step + step / 2;
+        r = Math.min(255, r * 1.25);
+        g = Math.min(255, g * 1.20);
       } else if (style === 'watercolor') {
-        r = r * 0.96 + 10;
-        g = g * 0.98 + 8;
-        b = b * 1.03 + 12;
+        r = r * 0.94 + 14;
+        g = g * 0.96 + 12;
+        b = b * 1.05 + 18;
       } else if (style === 'neon') {
-        r = r * 0.35 + 15;
+        r = r * 0.35 + 20;
         g = g * 0.30;
-        b = Math.min(255, b * 1.4 + 40);
+        b = Math.min(255, b * 1.45 + 45);
       } else if (style === 'pencil') {
-        const lum = r * 0.299 + g * 0.587 + b * 0.114;
         r = lum; g = lum; b = lum;
       } else if (style === 'retro') {
-        r = r * 1.12;
-        b = b * 0.90;
+        r = r * 1.16;
+        b = b * 0.88;
       }
 
       dst[i] = Math.min(255, Math.max(0, r));
@@ -381,8 +400,8 @@ document.addEventListener('DOMContentLoaded', () => {
       dst[i + 3] = a;
     }
 
-    // Step 3: Anti-Aliased Hand-Drawn Inking
-    const edgeThresh = (style === 'ghibli_pro' || style === 'ai_ghibli') ? 80 : 60;
+    // Step 3: G-Pen Calligraphic Inking Contours
+    const edgeThresh = (style === 'ai_ghibli' || style === 'ghibli_pro') ? 70 : 55;
 
     for (let y = 3; y < h - 3; y++) {
       for (let x = 3; x < w - 3; x++) {
@@ -394,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const grad = Math.abs(lumR - lumL) + Math.abs(lumD - lumU);
 
         if (grad > edgeThresh) {
-          const inkAlpha = (style === 'ghibli_pro' || style === 'ai_ghibli') ? 0.38 * strength : 0.85 * strength;
+          const inkAlpha = (style === 'ai_ghibli' || style === 'ghibli_pro') ? 0.45 * strength : 0.85 * strength;
           for (let dy = 0; dy < edgeThick; dy++) {
             for (let dx = 0; dx < edgeThick; dx++) {
               const targetIdx = ((y + dy) * w + (x + dx)) * 4;
@@ -404,9 +423,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   dst[targetIdx + 1] = 240;
                   dst[targetIdx + 2] = 255;
                 } else {
-                  dst[targetIdx] = dst[targetIdx] * (1.0 - inkAlpha) + 26 * inkAlpha;
-                  dst[targetIdx + 1] = dst[targetIdx + 1] * (1.0 - inkAlpha) + 22 * inkAlpha;
-                  dst[targetIdx + 2] = dst[targetIdx + 2] * (1.0 - inkAlpha) + 18 * inkAlpha;
+                  dst[targetIdx] = dst[targetIdx] * (1.0 - inkAlpha) + 18 * inkAlpha;
+                  dst[targetIdx + 1] = dst[targetIdx + 1] * (1.0 - inkAlpha) + 14 * inkAlpha;
+                  dst[targetIdx + 2] = dst[targetIdx + 2] * (1.0 - inkAlpha) + 12 * inkAlpha;
                 }
               }
             }
@@ -444,40 +463,46 @@ document.addEventListener('DOMContentLoaded', () => {
   // Sliders reactivity
   const playStrength = document.getElementById('playStrength');
   const playStrengthVal = document.getElementById('playStrengthVal');
-  playStrength.addEventListener('input', e => {
-    playStrengthVal.textContent = `${e.target.value}%`;
-    renderPlayground();
-  });
+  if (playStrength) {
+    playStrength.addEventListener('input', e => {
+      playStrengthVal.textContent = `${e.target.value}%`;
+      renderPlayground();
+    });
+  }
 
   const playEdge = document.getElementById('playEdge');
   const playEdgeVal = document.getElementById('playEdgeVal');
-  playEdge.addEventListener('input', e => {
-    playEdgeVal.textContent = `${e.target.value}px`;
-    renderPlayground();
-  });
+  if (playEdge) {
+    playEdge.addEventListener('input', e => {
+      playEdgeVal.textContent = `${e.target.value}px`;
+      renderPlayground();
+    });
+  }
 
   // Playground Custom Upload
   const playUploadBtn = document.getElementById('playUploadBtn');
   const playFileInput = document.getElementById('playFileInput');
-  playUploadBtn.addEventListener('click', () => playFileInput.click());
+  if (playUploadBtn && playFileInput) {
+    playUploadBtn.addEventListener('click', () => playFileInput.click());
 
-  playFileInput.addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = ev => {
-        const img = new Image();
-        img.onload = () => {
-          customPlayImage = img;
-          document.querySelectorAll('.play-preset').forEach(b => b.classList.remove('active'));
-          playUploadBtn.classList.add('active');
-          renderPlayground();
+    playFileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => {
+            customPlayImage = img;
+            document.querySelectorAll('.play-preset').forEach(b => b.classList.remove('active'));
+            playUploadBtn.classList.add('active');
+            renderPlayground();
+          };
+          img.src = ev.target.result;
         };
-        img.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+        reader.readAsDataURL(file);
+      }
+    });
+  }
 
   // Playground Split Slider
   function setPlaySplit(percent) {
@@ -495,30 +520,35 @@ document.addEventListener('DOMContentLoaded', () => {
     setPlaySplit(p);
   }
 
-  playHandle.addEventListener('mousedown', () => {
-    isDraggingPlay = true;
-    window.addEventListener('mousemove', onPlayMove);
-    window.addEventListener('mouseup', () => {
-      isDraggingPlay = false;
-      window.removeEventListener('mousemove', onPlayMove);
+  if (playHandle) {
+    playHandle.addEventListener('mousedown', () => {
+      isDraggingPlay = true;
+      window.addEventListener('mousemove', onPlayMove);
+      window.addEventListener('mouseup', () => {
+        isDraggingPlay = false;
+        window.removeEventListener('mousemove', onPlayMove);
+      });
     });
-  });
 
-  playHandle.addEventListener('touchstart', () => {
-    isDraggingPlay = true;
-    window.addEventListener('touchmove', onPlayMove);
-    window.addEventListener('touchend', () => {
-      isDraggingPlay = false;
-      window.removeEventListener('touchmove', onPlayMove);
+    playHandle.addEventListener('touchstart', () => {
+      isDraggingPlay = true;
+      window.addEventListener('touchmove', onPlayMove);
+      window.addEventListener('touchend', () => {
+        isDraggingPlay = false;
+        window.removeEventListener('touchmove', onPlayMove);
+      });
     });
-  });
+  }
 
-  document.getElementById('downloadPlaygroundBtn').addEventListener('click', () => {
-    const a = document.createElement('a');
-    a.href = canvasCartoon.toDataURL('image/jpeg', 0.95);
-    a.download = `cartoonify_artwork_${playStyle}.jpg`;
-    a.click();
-  });
+  const downloadBtn = document.getElementById('downloadPlaygroundBtn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = canvasCartoon.toDataURL('image/jpeg', 0.95);
+      a.download = `cartoonify_artwork_${playStyle}.jpg`;
+      a.click();
+    });
+  }
 
   // ===== 5. Developer Code Tabs =====
   const codeTabs = document.querySelectorAll('.code-tab-btn');
